@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продукты - DietKeeper</title>
+    <!-- Подключение Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Шапка -->
+        <header class="bg-light sticky-top">
+            <div class="container d-flex justify-content-between align-items-center py-2">
+                <!-- Логотип -->
+										<a href="index.html" class="navbar-brand text-decoration-none text-dark">
+											<img src="SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
+											<span class="site-title">DietKeeper</span>
+										</a>
+
+                <!-- Навигация -->
+                <div class="d-flex gap-2">
+									<!-- Кнопка "Категории" -->
+										<a href="categories.html" class="btn btn-outline-success rounded-pill px-4">
+											<i class="bi bi-grid-fill me-2"></i> Категории
+									</a>
+
+									<!-- Кнопка "Продукты" -->
+									<a href="products.html" class="btn btn-success rounded-pill px-4">
+											<i class="bi bi-basket-fill me-2"></i> Продукты
+									</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <div class="container mt-4">
+            <!-- Поиск -->
+            <form class="d-flex mb-4">
+                <div class="input-group input-group-lg search-bar">
+                    <input type="text" class="search-bar form-control" placeholder="Поиск продукта/категории" aria-label="Search">
+                    <span class="input-group-text bg-transparent border-start-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </span>
+                </div>
+            </form>
+
+                        <!-- Фильтры -->
+            <div class="filters-container">
+                <div class="d-flex flex-wrap justify-content-between align-items-start">
+                    <div class="filters-left">
+                        <div class="filter-group">
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Высокое содержание клетчатки</span>
+                            </label>
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Высокое содержание углеводов</span>
+                            </label>
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Высокое содержание белка</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filter-group mt-3">
+                        <div class="filter-group">
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Высокое содержание жиров</span>
+                            </label>
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Подходит вегетарианцам</span>
+                            </label>
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Без сахара</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Слайдер для калорий -->
+                    <div class="filters-right">
+                        <div class="range-slider">
+                            <label for="calories-range">Диапазон ккал:</label>
+                            <div class="slider-container">
+                                <input type="range" class="form-range calories-range" id="calories-range" min="0" max="1000" step="10">
+                                <div class="slider-markers">
+                                    <span class="slider-marker">0</span>
+                                    <span class="slider-marker">20</span>
+                                    <span class="slider-marker">130</span>
+                                    <span class="slider-marker">800</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Галерея продуктов -->
+            <div class="gallery">
+                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+											<div class="col">
+												<div class="card h-100">
+														<img src="PIC/fish.png" class="card-img-top" alt="Рыба">
+														<div class="card-body">
+																<p class="card-text">Рыба красная</p>
+														</div>
+												</div>
+										</div>
+										<div class="col">
+												<div class="card h-100">
+														<img src="PIC/Cheese.png" class="card-img-top" alt="Сыр">
+														<div class="card-body">
+																<p class="card-text">Сыр Маасдам</p>
+														</div>
+												</div>
+										</div>
+                    <!-- Добавить остальные продукты -->
+                </div>
+            </div>
+        </div>
+
+            <!-- Кнопка "Показать фильтры" для мобильных устройств -->
+        <button class="btn btn-success w-100 show-filters-button" style="display: none;">
+            Показать фильтры
+        </button>
+    </div>
+
+
+    <!-- Подключение Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
