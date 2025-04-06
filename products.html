@@ -67,14 +67,15 @@
                                 <input type="checkbox" class="form-check-input filter-checkbox">
                                 <span class="filter-label">Высокое содержание белка</span>
                             </label>
-                        </div>
-                    </div>
-                    <div class="filter-group mt-3">
-                        <div class="filter-group">
                             <label class="filter-item">
                                 <input type="checkbox" class="form-check-input filter-checkbox">
                                 <span class="filter-label">Высокое содержание жиров</span>
                             </label>
+                        </div>
+                    </div>
+                    <div class="filter-group mt-3">
+                        <div class="filter-group">
+                            
                             <label class="filter-item">
                                 <input type="checkbox" class="form-check-input filter-checkbox">
                                 <span class="filter-label">Подходит вегетарианцам</span>
@@ -83,20 +84,23 @@
                                 <input type="checkbox" class="form-check-input filter-checkbox">
                                 <span class="filter-label">Без сахара</span>
                             </label>
+                            <label class="filter-item">
+                                <input type="checkbox" class="form-check-input filter-checkbox">
+                                <span class="filter-label">Можно в пост</span>
+                            </label>
                         </div>
                     </div>
                     <!-- Слайдер для калорий -->
-                    <div class="filters-right">
-                        <div class="range-slider">
-                            <label for="calories-range">Диапазон ккал:</label>
-                            <div class="slider-container">
-                                <input type="range" class="form-range calories-range" id="calories-range" min="0" max="1000" step="10">
-                                <div class="slider-markers">
-                                    <span class="slider-marker">0</span>
-                                    <span class="slider-marker">20</span>
-                                    <span class="slider-marker">130</span>
-                                    <span class="slider-marker">800</span>
-                                </div>
+                    <div class="range-slider">
+                        <label for="calories-range">Диапазон ккал:</label>
+                        <div class="slider-container">
+                            <input type="range" class="form-range calories-range" id="calories-range-min" min="0" max="1000" step="10" value="0">
+                            <input type="range" class="form-range calories-range" id="calories-range-max" min="0" max="1000" step="10" value="1000">
+                            <div class="slider-markers">
+                                <span class="slider-marker">0</span>
+                                <span class="slider-marker">20</span>
+                                <span class="slider-marker">130</span>
+                                <span class="slider-marker">800</span>
                             </div>
                         </div>
                     </div>
