@@ -56,19 +56,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	const categoriesSidebar = document.querySelector('.categories-sidebar');
 
 	if (showCategoriesButton && categoriesSidebar) {
-			showCategoriesButton.addEventListener('click', function() {
+			showCategoriesButton.addEventListener('click', function () {
 					categoriesSidebar.classList.toggle('active');
-					
-					// Сохраняем иконку перед изменением текста
+
+					// Переключение иконки и текста
 					const icon = this.querySelector('i');
-					const iconClass = categoriesSidebar.classList.contains('active') 
-							? 'bi-chevron-up' 
-							: 'bi-chevron-down';
-					
-					// Полностью пересобираем содержимое кнопки
+					icon.classList.toggle('bi-chevron-down');
+					icon.classList.toggle('bi-chevron-up');
+
 					this.innerHTML = categoriesSidebar.classList.contains('active') 
-							? 'Скрыть категории <i class="bi ' + iconClass + '"></i>' 
-							: 'Показать категории <i class="bi ' + iconClass + '"></i>';
+							? 'Скрыть категории <i class="bi bi-chevron-up"></i>' 
+							: 'Показать категории <i class="bi bi-chevron-down"></i>';
 			});
 	}
 });

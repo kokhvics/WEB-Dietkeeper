@@ -22,8 +22,8 @@
 
             <!-- Навигация -->
             <div class="d-flex gap-2">
-                <!-- Кнопка "Категории" в шапке -->
-                <a href="categories.html" class="btn btn-outline-success rounded-pill px-4 d-none d-md-block">
+                <!-- Кнопка "Категории" -->
+                <a href="categories.html" class="btn btn-outline-success rounded-pill px-4">
                     <i class="bi bi-grid-fill me-2"></i> Категории
                 </a>
 
@@ -49,27 +49,22 @@
             </div>
         </form>
 
-        <!-- Кнопка "Показать категории" для мобильных -->
+        <!-- Кнопка показа категорий для мобильных -->
         <button class="btn btn-success w-100 show-categories d-md-none mb-3">
             Показать категории <i class="bi bi-chevron-down"></i>
         </button>
         <!-- Категории -->
         <div class="row">
-            <div class="col-md-3 categories-sidebar active">
+            <div class="col-md-3 categories-sidebar">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action yellow-block ">Овощи</a>
+                    <a href="#" class="list-group-item list-group-item-action yellow-block">Овощи</a>
                     <a href="#" class="list-group-item list-group-item-action yellow-block">Фрукты</a>
                     <a href="#" class="list-group-item list-group-item-action yellow-block">Крупы</a>
                     <a href="#" class="list-group-item list-group-item-action yellow-block">Мясо</a>
                     <a href="#" class="list-group-item list-group-item-action yellow-block">Рыба</a>
                     <a href="#" class="list-group-item list-group-item-action yellow-block">Грибы</a>
                     <a href="#" class="list-group-item list-group-item-action yellow-block">Напитки</a>
-                     <!-- Кнопка "Показать еще" -->
-                    <a href="categories.html" class="btn btn-success w-100 d-md-none mt-3">
-                        Показать еще <i class="bi bi-arrow-right"></i>
-                    </a>
                 </div>
-
             </div>
             <div class="col-md-9">
                 <!-- Продукты -->

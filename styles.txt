@@ -105,53 +105,9 @@ body {
 	border-radius: 20px;
 }
 
-/* Скрыть кнопку "Категории" в шапке на мобильных */
-.navbar .btn-outline-success {
-	display: none;
-}
-
-@media (min-width: 768px) {
-	.navbar .btn-outline-success {
-			display: inline-block;
-	}
-}
-
-/* Стили для кнопки "Показать категории" */
-.show-categories {
-	background-color: #9ACD32; /* Зеленый фон */
-	color: #fff; /* Белый текст */
-	border-radius: 30px; /* Закругленные углы */
-	padding: 10px 20px; /* Отступы внутри кнопки */
-	transition: all 0.3s ease; /* Плавный переход */
-}
-
-.show-categories:hover {
-	background-color: #8BC34A; /* Темно-зеленый при наведении */
-}
-
-/* Скрыть категории по умолчанию */
-.categories-sidebar {
-	display: none; /* Скрыть по умолчанию */
-}
-
-/* Показать категории при активации */
-.categories-sidebar.active {
-	display: block;
-	animation: slideDown 0.3s ease;
-	padding-bottom: 5%;
-}
-
-@keyframes slideDown {
-	from { opacity: 0; transform: translateY(-10px); }
-	to { opacity: 1; transform: translateY(0); }
-}
-
-/* Стили для кнопки "Показать еще" */
-.btn-show-more {
-	background-color: #9ACD32; /* Зеленый фон */
-	color: #fff; /* Белый текст */
-	border-radius: 30px; /* Закругленные углы */
-	margin-top: 10px;
+.btn-outline-success {
+	border-radius: 20px;
+	background-color: #9ACD32;
 }
 
 /* Стили для строки поиска */
@@ -220,6 +176,16 @@ body {
 	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+/* Для десктопной версии */
+@media (min-width: 768px) {
+	.categories-sidebar {
+			display: block !important;
+	}
+	
+	.show-categories {
+			display: none !important;
+	}
+}
 
 /* Стили для табов */
 .nav-tabs .nav-link {
@@ -596,6 +562,37 @@ h5 {
 
 
 
+
+
+/* Медиазапросы для мобильных устройств */
+@media (max-width: 768px) {
+	.navbar-nav {
+			display: none; /* Скрыть меню на мобильных устройствах */
+	}
+
+	.list-group {
+			display: none; /* Скрыть категории по умолчанию */
+	}
+
+	.show-categories {
+			display: block;
+			background-color: #9ACD32;
+			color: #fff;
+			padding: 10px;
+			border-radius: 10px;
+			cursor: pointer;
+			text-align: center;
+	}
+}
+
+.show-categories {
+	display: none;
+}
+
+.show-categories.active {
+	display: block;
+}
+
 /* Стили для кнопок */
 .btn {
 	font-size: 1rem;
@@ -622,7 +619,28 @@ header {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для разделения шапки */
 }
 
+/* Категории для мобильных */
+@media (max-width: 767px) {
+	.categories-sidebar {
+			display: none;
+			width: 100%;
+			margin-bottom: 20px;
+	}
+	
+	.categories-sidebar.active {
+			display: block;
+			animation: slideDown 0.3s ease;
+	}
 
+	.list-group-item {
+			width: 100%;
+			margin: 5px 0;
+	}
+
+	.show-categories {
+			display: block !important;
+	}
+}
 
 @keyframes slideDown {
 	from { opacity: 0; transform: translateY(-10px); }
