@@ -1,48 +1,52 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const filtersContainer = document.querySelector('.filters-container');
-	const showFiltersButton = document.createElement('button');
-	showFiltersButton.className = 'btn btn-success w-100';
-	showFiltersButton.textContent = 'Показать фильтры';
+	const showFiltersButton = document.querySelector('.show-filters-button');
+	
+	// Инициализация состояния кнопки
+	let isFiltersVisible = false;
 
-	// Добавляем кнопку "Показать фильтры" на мобильных устройствах
-	if (window.matchMedia('(max-width: 767px)').matches) {
-			const container = document.querySelector('.container');
-			container.insertBefore(showFiltersButton, container.firstChild);
-
+	// Обработчик для кнопки "Показать/скрыть фильтры"
+	if (showFiltersButton) {
 			showFiltersButton.addEventListener('click', function () {
-					filtersContainer.style.display = filtersContainer.style.display === 'block' ? 'none' : 'block';
-					this.textContent = filtersContainer.style.display === 'block' ? 'Скрыть фильтры' : 'Показать фильтры';
+					isFiltersVisible = !isFiltersVisible;
+					filtersContainer.classList.toggle('active');
+					
+					// Обновление иконки и текста
+					const icon = this.querySelector('i');
+					icon.classList.toggle('bi-funnel-fill');
+					icon.classList.toggle('bi-funnel');
+					this.innerHTML = isFiltersVisible 
+							? 'Скрыть фильтры <i class="bi bi-funnel-fill"></i>' 
+							: 'Показать фильтры <i class="bi bi-funnel"></i>';
 			});
 	}
 
-	// Обработка toggle-list
-	const toggleHeaders = document.querySelectorAll('.toggle-header');
+	// Адаптация при изменении размера окна
+	window.addEventListener('resize', function() {
+			if (window.matchMedia('(min-width: 992px)').matches) {
+					filtersContainer.classList.remove('active');
+					showFiltersButton.innerHTML = 'Показать фильтры <i class="bi bi-funnel"></i>';
+			}
+	});
 
+	// Обработка toggle-list (ваш существующий код)
+	const toggleHeaders = document.querySelectorAll('.toggle-header');
 	toggleHeaders.forEach(header => {
 			header.addEventListener('click', function () {
 					const toggleItem = header.parentElement;
 					const toggleContent = toggleItem.querySelector('.toggle-content');
-
-					// Переключаем класс active
 					toggleItem.classList.toggle('active');
-
-					// Если есть стрелка, поворачиваем её
+					
 					const arrow = header.querySelector('.arrow');
 					if (arrow) {
-							arrow.style.transform = toggleItem.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+							arrow.style.transform = toggleItem.classList.contains('active') 
+									? 'rotate(180deg)' 
+									: 'rotate(0deg)';
 					}
-
-					// Плавное отображение/скрытие содержимого
-					if (toggleItem.classList.contains('active')) {
-							toggleContent.style.maxHeight = toggleContent.scrollHeight + 'px'; // Устанавливаем высоту по содержимому
-					} else {
-							toggleContent.style.maxHeight = '0'; // Скрываем содержимое
-					}
+					
+					toggleContent.style.maxHeight = toggleItem.classList.contains('active') 
+							? toggleContent.scrollHeight + 'px' 
+							: '0';
 			});
 	});
-		// Показать/скрыть фильтры при клике на кнопку
-		showFiltersButton.addEventListener('click', function () {
-				filtersContainer.style.display = filtersContainer.style.display === 'block' ? 'none' : 'block';
-				this.textContent = filtersContainer.style.display === 'block' ? 'Скрыть фильтры' : 'Показать фильтры';
-		});
 });
