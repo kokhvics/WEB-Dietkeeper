@@ -129,21 +129,23 @@ body {
 	background-color: #8BC34A; /* Темно-зеленый при наведении */
 }
 
-/* Скрыть категории по умолчанию */
-.categories-sidebar {
-	display: none; /* Скрыть по умолчанию */
-}
+@media (max-width: 992px) {
+	/* Скрыть категории по умолчанию */
+	.categories-sidebar {
+		display: none; /* Скрыть по умолчанию */
+	}
 
-/* Показать категории при активации */
-.categories-sidebar.active {
-	display: block;
-	animation: slideDown 0.3s ease;
-	padding-bottom: 5%;
-}
+	/* Показать категории при активации */
+	.categories-sidebar.active {
+		display: block;
+		animation: slideDown 0.3s ease;
+		padding-bottom: 5%;
+	}
 
-@keyframes slideDown {
-	from { opacity: 0; transform: translateY(-10px); }
-	to { opacity: 1; transform: translateY(0); }
+	@keyframes slideDown {
+		from { opacity: 0; transform: translateY(-10px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
 }
 
 /* Стили для кнопки "Показать еще" */
