@@ -284,10 +284,14 @@ h5 {
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 	margin-bottom: 10px; /* Отступ между кнопками */
+	flex-direction: column;
+	align-items: center;
 }
 
 .toggle-header:hover {
-	background-color: #8BC34A; /* Темно-зеленый при наведении */
+	background-color: #8BC34A;
+	flex-direction: column;
+	align-items: center; /* Темно-зеленый при наведении */
 }
 
 .toggle-item {
@@ -307,6 +311,8 @@ h5 {
 	max-height: 0; /* Скрываем содержимое по умолчанию */
 	overflow: hidden;
 	transition: max-height 0.3s ease, padding 0.3s ease;
+	flex-direction: column;
+	align-items: center;
 	
 }
 
@@ -588,12 +594,39 @@ h5 {
 	to { opacity: 1; transform: translateY(0); }
 }
 
+/* Стили для заголовков категорий */
 .category-tabs {
-		flex-direction: column; /* Отображение категорий в столбик */
+	display: flex;
+	justify-content: center;
 }
 
 .category-header {
-		width: 100%; /* Полная ширина на мобильных устройствах */
+	background-color: #FFB900; /* Желтый фон */
+	color: #fff; /* Белый текст */
+	border: none;
+	border-radius: 30px;
+	padding: 15px 15px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.category-header.active {
+	background-color: #FDBA00;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 767px) {
+	.category-tabs {
+			flex-direction: column;
+			align-items: center;
+	}
+
+	.category-header {
+			width: 70%;
+			margin: 5px 0;
+	}
 }
 
 
