@@ -1,0 +1,4 @@
+Ошибка подключения: could not find driver<br>Трассировка: #0 C:\web\connect_db.php(30): PDO->__construct('mysql:host=loca...', 'root', Object(SensitiveParameterValue))
+#1 {main}<br>Ошибка подключения: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)<br>Трассировка: #0 C:\web\connect_db.php(30): PDO->__construct('mysql:host=loca...', 'root', Object(SensitiveParameterValue))
+#1 {main}<br>Ошибка подключения: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)<br>Трассировка: #0 C:\web\connect_db.php(15): PDO->__construct('mysql:host=loca...', 'root', Object(SensitiveParameterValue))
+#1 {main}<br>
