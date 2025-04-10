@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .list-group-item.active-category {
-            background-color: #198754;
+            background-color: #9ACD32;
             color: white;
-            border-color: #198754;
+            border-color: #9ACD32;
         }
         .show-all-btn {
             margin-top: 10px;
@@ -39,7 +39,7 @@
                 </a>
 
                 <!-- Кнопка "Продукты" -->
-                <a href="products.html" class="btn btn-success rounded-pill px-4">
+                <a href="products.php" class="btn btn-success rounded-pill px-4">
                     <i class="bi bi-basket-fill me-2"></i> Продукты
                 </a>
             </div>
@@ -49,9 +49,9 @@
     <!-- Основной контент -->
     <div class="container mt-4">
         <!-- Поиск -->
-        <form class="d-flex mb-4">
+        <form class="d-flex mb-4" id="search-form">
             <div class="input-group input-group-lg search-bar">
-                <input type="text" class="search-bar form-control" placeholder="Поиск продукта/категории" aria-label="Search">
+                <input type="text" id="search-input" class="search-bar form-control" placeholder="Поиск продукта/категории" aria-label="Search">
                 <span class="input-group-text bg-transparent border-start-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -59,6 +59,9 @@
                 </span>
             </div>
         </form>
+
+        <!-- Результаты поиска -->
+        <div id="search-results" class="row row-cols-1 row-cols-md-3 g-4 d-none"></div>
 
         <!-- Кнопка "Показать категории" для мобильных -->
         <button class="btn btn-success w-100 show-categories d-md-none mb-3">
@@ -169,6 +172,58 @@
             } else {
                 icon.classList.remove('bi-chevron-down');
                 icon.classList.add('bi-chevron-up');
+            }
+        });
+
+        // Динамический поиск
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const productsContainer = document.getElementById('products-container');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+
+            if (query.length >= 3) {
+                fetch(`search.php?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResults.innerHTML = '';
+                        productsContainer.classList.add('d-none');
+                        searchResults.classList.remove('d-none');
+
+                        if (data.length > 0) {
+                            data.forEach(product => {
+                                const card = `
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="${product.image_url}" class="card-img-top" alt="${product.name}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${product.name}</h5>
+                                                <div class="nutrients">
+                                                    <small class="text-muted">
+                                                        К: ${product.calories}ккал | 
+                                                        Б: ${product.proteins}г | 
+                                                        Ж: ${product.fats}г | 
+                                                        У: ${product.carbohydrates}г
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                                searchResults.innerHTML += card;
+                            });
+                        } else {
+                            searchResults.innerHTML = '<div class="col-12"><div class="alert alert-info">Ничего не найдено.</div></div>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при выполнении запроса:', error);
+                        searchResults.innerHTML = '<div class="col-12"><div class="alert alert-danger">Произошла ошибка при поиске.</div></div>';
+                    });
+            } else {
+                searchResults.classList.add('d-none');
+                productsContainer.classList.remove('d-none');
             }
         });
     </script>

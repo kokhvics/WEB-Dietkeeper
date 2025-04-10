@@ -204,22 +204,12 @@ body {
 	background-color: #ffc107;
 	color: #fff;
 }
-
-body .list-group-item.active-category {
+list-group-item.active-category {
 	background-color: #9ACD32;
 	color: white;
 	border-color: #9ACD32;
 }
 
-.btn-success {
-  background-color: #9ACD32;
-  border-color: #9ACD32;
-}
-
-.btn-success:hover {
-  background-color: #7DBA2F;
-  border-color: #6FA62B;
-}
 
 /* Желтые блоки категорий */
 .yellow-block {

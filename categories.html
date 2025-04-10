@@ -14,7 +14,7 @@
     <header class="bg-light sticky-top">
         <div class="container d-flex justify-content-between align-items-center py-2">
             <!-- Логотип -->
-            <a href="index.html" class="navbar-brand text-decoration-none text-dark">
+            <a href="index.php" class="navbar-brand text-decoration-none text-dark">
                 <img src="SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
                 <span class="site-title">DietKeeper</span>
             </a>
@@ -22,7 +22,7 @@
             <!-- Навигация -->
             <div class="d-flex gap-2">
                 <!-- Кнопка "Продукты" -->
-                <a href="products.html" class="btn btn-success rounded-pill px-4 text-decoration-none">
+                <a href="products.php" class="btn btn-success rounded-pill px-4 text-decoration-none">
                     <i class="bi bi-basket-fill me-2"></i> Продукты
                 </a>
             </div>
@@ -31,17 +31,6 @@
 
     <!-- Основной контент -->
     <div class="container mt-4">
-        <!-- Поиск -->
-        <form class="d-flex mb-4">
-            <div class="input-group input-group-lg search-bar">
-                <input type="text" class="search-bar form-control" placeholder="Поиск продукта/категории" aria-label="Search">
-                <span class="input-group-text bg-transparent border-start-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </span>
-            </div>
-        </form>
 
         <!-- Категории -->
         <div class="container mt-4 d-none d-md-block">
@@ -60,66 +49,49 @@
                         <div class="col-md-4">
                             <div class="toggle-item">
                                 <button class="toggle-header">
-                                    Овощи ▼
+                                    Мясные продукты ▼
                                 </button>
                                 <ul class="list-unstyled toggle-content">
-                                    <li>Бобовые</li>
-                                    <li>Зеленые</li>
-                                    <li>Яркие</li>
+                                    <li>Птица</li>
+                                    <li>Свинина</li>
+                                    <li>Говядина</li>
+                                    <li>Баранина</li>
+                                    <li>Конина</li>
+                                    <li>Дичь</li>
                                 </ul>
                             </div>
                             <div class="toggle-item">
                                 <button class="toggle-header">
-                                    Фрукты ▼
+                                    Рыба и морепродукты ▼
                                 </button>
                                 <ul class="list-unstyled toggle-content">
-                                    <li>Миндаль</li>
-                                    <li>Грецкие орехи</li>
-                                    <li>Фисташки</li>
+                                    <li>Морская рыба</li>
+                                    <li>Речная рыба</li>
+                                    <li>Морепродукты</li>
                                 </ul>
                             </div>
                             <div class="toggle-item">
                                 <button class="toggle-header">
-                                    Мясо ▼
+                                    Крупы ▼
                                 </button>
                                 <ul class="list-unstyled toggle-content">
-                                    <li>Овсянка</li>
-                                    <li>Рис</li>
-                                    <li>Пшено</li>
+                                    <li>Чечевица</li>
+                                    <li>Гречка</li>
+                                    <li>Киноа</li>
                                 </ul>
                             </div>
-														<div class="toggle-item">
-															<button class="toggle-header">
-																	Рыба ▼
-															</button>
-															<ul class="list-unstyled toggle-content">
-																	<li>Овсянка</li>
-																	<li>Рис</li>
-																	<li>Пшено</li>
-															</ul>
-													</div>
-													<div class="toggle-item">
-															<button class="toggle-header">
-																	Другое ▼
-															</button>
-															<ul class="list-unstyled toggle-content">
-																	<li>Овсянка</li>
-																	<li>Рис</li>
-																	<li>Пшено</li>
-															</ul>
-													</div>
                         </div>
 
                         <!-- Жиры -->
                         <div class="col-md-4">
                             <div class="toggle-item">
                                 <button class="toggle-header">
-                                    Фрукты ▼
+                                    Семена ▼
                                 </button>
                                 <ul class="list-unstyled toggle-content">
-                                    <li>Яблоки</li>
-                                    <li>Груши</li>
-                                    <li>Апельсины</li>
+                                    <li>Чиа</li>
+                                    <li>Льна</li>
+                                    <li>Кунжут</li>
                                 </ul>
                             </div>
                             <div class="toggle-item">
@@ -134,12 +106,11 @@
                             </div>
                             <div class="toggle-item">
                                 <button class="toggle-header">
-                                    Хлеб ▼
+                                    Молочные продукты ▼
                                 </button>
                                 <ul class="list-unstyled toggle-content">
-                                    <li>Цельнозерновой</li>
-                                    <li>Ржаной</li>
-                                    <li>Бездрожжевой</li>
+                                    <li>Сыр</li>
+                                    <li>Сливочное масло</li>
                                 </ul>
                             </div>
                         </div>
@@ -158,12 +129,12 @@
                             </div>
                             <div class="toggle-item">
                                 <button class="toggle-header">
-                                    Семена ▼
+                                    Хлеб ▼
                                 </button>
                                 <ul class="list-unstyled toggle-content">
-                                    <li>Чиа</li>
-                                    <li>Льняные семена</li>
-                                    <li>Тыквенные семечки</li>
+                                    <li>Белый</li>
+                                    <li>Цельнозерновой</li>
+                                    <li>Ржаной</li>
                                 </ul>
                             </div>
                             <div class="toggle-item">
