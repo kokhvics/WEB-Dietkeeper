@@ -168,7 +168,7 @@
                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         
                         // Базовый SQL-запрос
-                        $sql = "SELECT id, name, category, proteins, fats, carbohydrates, calories, image_url FROM products WHERE 1=1";
+                        $sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url FROM products WHERE 1=1";
                         $params = [];
                         
                         // Поиск по названию
@@ -193,17 +193,17 @@
                         
                         // Высокое содержание углеводов
                         if (isset($_GET['high_carbs'])) {
-                            $sql .= " AND carbohydrates > 60";
+                            $sql .= " AND carbs > 60";
                         }
                         
                         // Высокое содержание белка
                         if (isset($_GET['high_protein'])) {
-                            $sql .= " AND proteins > 20";
+                            $sql .= " AND protein > 20";
                         }
                         
                         // Высокое содержание жиров
                         if (isset($_GET['high_fat'])) {
-                            $sql .= " AND fats > 30";
+                            $sql .= " AND fat > 30";
                         }
                         
                         // Подходит вегетарианцам
@@ -237,9 +237,9 @@
                                 echo '            <div class="nutrients">';
                                 echo '                <small class="text-muted">';
                                 echo '                    К: ' . htmlspecialchars($product['calories']) . 'ккал | ';
-                                echo '                    Б: ' . htmlspecialchars($product['proteins']) . 'г | ';
-                                echo '                    Ж: ' . htmlspecialchars($product['fats']) . 'г | ';
-                                echo '                    У: ' . htmlspecialchars($product['carbohydrates']) . 'г';
+                                echo '                    Б: ' . htmlspecialchars($product['protein']) . 'г | ';
+                                echo '                    Ж: ' . htmlspecialchars($product['fat']) . 'г | ';
+                                echo '                    У: ' . htmlspecialchars($product['carbs']) . 'г';
                                 echo '                </small>';
                                 echo '            </div>';
                                 echo '        </div>';
@@ -308,9 +308,9 @@
                                                 <div class="nutrients">
                                                     <small class="text-muted">
                                                         К: ${product.calories}ккал | 
-                                                        Б: ${product.proteins}г | 
-                                                        Ж: ${product.fats}г | 
-                                                        У: ${product.carbohydrates}г
+                                                        Б: ${product.protein}г | 
+                                                        Ж: ${product.fat}г | 
+                                                        У: ${product.carbs}г
                                                                                                                                    </small>
                                                 </div>
                                             </div>

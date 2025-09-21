@@ -111,7 +111,7 @@
                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         
                         // Определяем SQL-запрос в зависимости от выбранной категории
-                        $sql = "SELECT id, name, category, proteins, fats, carbohydrates, calories, image_url FROM products";
+                        $sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url FROM products";
                         $params = [];
                         
                         if (!empty($selectedCategory)) {
@@ -135,9 +135,9 @@
                                 echo '            <div class="nutrients">';
                                 echo '                <small class="text-muted">';
                                 echo '                    К: ' . htmlspecialchars($product['calories']) . 'ккал | ';
-                                echo '                    Б: ' . htmlspecialchars($product['proteins']) . 'г | ';
-                                echo '                    Ж: ' . htmlspecialchars($product['fats']) . 'г | ';
-                                echo '                    У: ' . htmlspecialchars($product['carbohydrates']) . 'г';
+                                echo '                    Б: ' . htmlspecialchars($product['protein']) . 'г | ';
+                                echo '                    Ж: ' . htmlspecialchars($product['fat']) . 'г | ';
+                                echo '                    У: ' . htmlspecialchars($product['carbs']) . 'г';
                                 echo '                </small>';
                                 echo '            </div>';
                                 echo '        </div>';
@@ -202,9 +202,9 @@
                                                 <div class="nutrients">
                                                     <small class="text-muted">
                                                         К: ${product.calories}ккал | 
-                                                        Б: ${product.proteins}г | 
-                                                        Ж: ${product.fats}г | 
-                                                        У: ${product.carbohydrates}г
+                                                        Б: ${product.protein}г | 
+                                                        Ж: ${product.fat}г | 
+                                                        У: ${product.carbs}г
                                                     </small>
                                                 </div>
                                             </div>

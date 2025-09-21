@@ -20,7 +20,7 @@ try {
 
     if (strlen($query) >= 2) {
         // SQL-запрос для поиска
-        $sql = "SELECT id, name, category, proteins, fats, carbohydrates, calories, image_url 
+        $sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url 
                 FROM products 
                 WHERE name LIKE :query 
                 LIMIT 10"; // Ограничиваем количество результатов

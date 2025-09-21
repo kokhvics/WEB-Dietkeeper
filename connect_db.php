@@ -27,7 +27,7 @@ try {
 }
 
 // SQL-запрос для получения данных из таблицы products
-$sql = "SELECT id, name, category, proteins, fats, carbohydrates, calories, image_url FROM products";
+$sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url FROM products";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 
@@ -60,9 +60,9 @@ if (!empty($limitedProducts)) {
         echo "<td>" . htmlspecialchars($product['id'] ?? "") . "</td>";
         echo "<td>" . htmlspecialchars($product['name'] ?? "") . "</td>";
         echo "<td>" . htmlspecialchars($product['category'] ?? "") . "</td>";
-        echo "<td>" . htmlspecialchars($product['proteins'] ?? "") . "</td>";
-        echo "<td>" . htmlspecialchars($product['fats'] ?? "") . "</td>";
-        echo "<td>" . htmlspecialchars($product['carbohydrates'] ?? "") . "</td>";
+        echo "<td>" . htmlspecialchars($product['protein'] ?? "") . "</td>";
+        echo "<td>" . htmlspecialchars($product['fat'] ?? "") . "</td>";
+        echo "<td>" . htmlspecialchars($product['carbs'] ?? "") . "</td>";
         echo "<td>" . htmlspecialchars($product['calories'] ?? "") . "</td>";
         echo "<td><img src='" . htmlspecialchars($product['image_url'] ?? "") . "' alt='" . htmlspecialchars($product['name'] ?? "") . "' width='100'></td>";
         echo "</tr>";
