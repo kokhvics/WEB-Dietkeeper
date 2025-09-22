@@ -9,46 +9,7 @@
     <!-- Подключение Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .filter-group {
-            margin-bottom: 1rem;
-        }
-        .filter-item {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        .slider-container {
-            position: relative;
-            margin: 2rem 0;
-        }
-        .calories-range {
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-        .slider-markers {
-            display: flex;
-            justify-content: space-between;
-            margin-top: -0.5rem;
-        }
-        .slider-marker {
-            font-size: 0.8rem;
-        }
-        .filter-checkbox:checked + .filter-label {
-            font-weight: bold;
-            color: #198754;
-        }
-        .filters-container {
-            margin-bottom: 2rem;
-        }
-        @media (max-width: 991.98px) {
-            .filters-container {
-                display: none;
-            }
-            .filters-container.show {
-                display: block;
-            }
-        }
-    </style>
+
 </head>
 <body>
     <div class="container-fluid">
