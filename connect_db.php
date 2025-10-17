@@ -52,5 +52,59 @@ function getAllProducts() {
     }
 }
 
+// Функция для поиска продуктов
+function searchProducts($search) {
+    try {
+        $conn = getDbConnection();
+        $sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url FROM products 
+                WHERE id LIKE :search OR name LIKE :search OR category LIKE :search";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':search' => "%$search%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        throw new Exception("Ошибка поиска: " . $e->getMessage());
+    }
+}
+
+// Функция для обновления продукта
+function updateProduct($id, $name, $category, $protein, $fat, $carbs, $calories, $image_url) {
+    $conn = getDbConnection();
+    $sql = "UPDATE products SET name = :name, category = :category, protein = :protein, fat = :fat, carbs = :carbs, calories = :calories, image_url = :image_url WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':id' => $id,
+        ':name' => $name,
+        ':category' => $category,
+        ':protein' => $protein,
+        ':fat' => $fat,
+        ':carbs' => $carbs,
+        ':calories' => $calories,
+        ':image_url' => $image_url
+    ]);
+}
+
+// Функция для создания продукта
+function insertProduct($name, $category, $protein, $fat, $carbs, $calories, $image_url) {
+    $conn = getDbConnection();
+    $sql = "INSERT INTO products (name, category, protein, fat, carbs, calories, image_url) VALUES (:name, :category, :protein, :fat, :carbs, :calories, :image_url)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':name' => $name,
+        ':category' => $category,
+        ':protein' => $protein,
+        ':fat' => $fat,
+        ':carbs' => $carbs,
+        ':calories' => $calories,
+        ':image_url' => $image_url
+    ]);
+}
+
+// Функция для удаления продукта
+function deleteProduct($id) {
+    $conn = getDbConnection();
+    $sql = "DELETE FROM products WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':id' => $id]);
+}
 
 ?>
