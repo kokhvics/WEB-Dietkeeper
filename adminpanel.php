@@ -39,6 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             deleteProduct($id);
             echo json_encode(['success' => true, 'message' => 'Продукт удален']);
             exit;
+        } elseif ($action === 'search') {
+            $search = $_POST['search'] ?? '';
+            $products = searchProducts($search);
+            echo json_encode(['success' => true, 'products' => $products]);
+            exit;
         }
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
@@ -112,51 +117,53 @@ try {
                 <div class="tab-content" id="adminTabsContent">
                     <!-- Вкладка Просмотр -->
                     <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
+                        <h2>Все продукты</h2>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Поиск по ID, названию или категории">
+                        </div>
                         <?php if (isset($error)): ?>
                             <div class="alert alert-danger">
                                 <?php echo htmlspecialchars($error); ?>
                             </div>
                         <?php else: ?>
-                            <h2>Все продукты</h2>
-                            <?php if (!empty($products)): ?>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
-                                        <thead class="table-dark">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="viewTable">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Название</th>
+                                            <th>Категория</th>
+                                            <th>Белки (г)</th>
+                                            <th>Жиры (г)</th>
+                                            <th>Углеводы (г)</th>
+                                            <th>Калории (ккал)</th>
+                                            <th>Изображение</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="viewTableBody">
+                                        <?php foreach ($products as $product): ?>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Название</th>
-                                                <th>Категория</th>
-                                                <th>Белки (г)</th>
-                                                <th>Жиры (г)</th>
-                                                <th>Углеводы (г)</th>
-                                                <th>Калории (ккал)</th>
-                                                <th>Изображение</th>
+                                                <td><?php echo htmlspecialchars($product['id'] ?? ""); ?></td>
+                                                <td><?php echo htmlspecialchars($product['name'] ?? ""); ?></td>
+                                                <td><?php echo htmlspecialchars($product['category'] ?? ""); ?></td>
+                                                <td><?php echo htmlspecialchars($product['protein'] ?? ""); ?></td>
+                                                <td><?php echo htmlspecialchars($product['fat'] ?? ""); ?></td>
+                                                <td><?php echo htmlspecialchars($product['carbs'] ?? ""); ?></td>
+                                                <td><?php echo htmlspecialchars($product['calories'] ?? ""); ?></td>
+                                                <td>
+                                                    <?php if (!empty($product['image_url'])): ?>
+                                                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name'] ?? ""); ?>" width="50" class="img-thumbnail">
+                                                    <?php else: ?>
+                                                        Нет изображения
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($products as $product): ?>
-                                                <tr>
-                                                    <td><?php echo htmlspecialchars($product['id'] ?? ""); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['name'] ?? ""); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['category'] ?? ""); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['protein'] ?? ""); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['fat'] ?? ""); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['carbs'] ?? ""); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['calories'] ?? ""); ?></td>
-                                                    <td>
-                                                        <?php if (!empty($product['image_url'])): ?>
-                                                            <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name'] ?? ""); ?>" width="50" class="img-thumbnail">
-                                                        <?php else: ?>
-                                                            Нет изображения
-                                                        <?php endif; ?>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <p class="text-muted">Всего записей: <?php echo count($products); ?></p>
-                            <?php else: ?>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-muted" id="recordCount">Всего записей: <?php echo count($products); ?></p>
+                            <?php if (empty($products)): ?>
                                 <div class="alert alert-info">
                                     <p>Таблица products пуста.</p>
                                 </div>
@@ -362,7 +369,54 @@ try {
     <!-- Подключение Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // JavaScript для обработки форм и AJAX
+        // JavaScript для обработки форм, поиска и AJAX
+
+        // Обработка поиска
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.trim();
+            const formData = new FormData();
+            formData.append('action', 'search');
+            formData.append('search', searchValue);
+
+            fetch('adminpanel.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const tbody = document.getElementById('viewTableBody');
+                    tbody.innerHTML = '';
+                    if (data.products.length > 0) {
+                        data.products.forEach(product => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${product.id || ''}</td>
+                                <td>${product.name || ''}</td>
+                                <td>${product.category || ''}</td>
+                                <td>${product.protein || ''}</td>
+                                <td>${product.fat || ''}</td>
+                                <td>${product.carbs || ''}</td>
+                                <td>${product.calories || ''}</td>
+                                <td>
+                                    ${product.image_url ? 
+                                        `<img src="${product.image_url}" alt="${product.name || ''}" width="50" class="img-thumbnail">` : 
+                                        'Нет изображения'}
+                                </td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                        document.getElementById('recordCount').textContent = `Всего записей: ${data.products.length}`;
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Нет результатов</td></tr>';
+                        document.getElementById('recordCount').textContent = 'Всего записей: 0';
+                    }
+                } else {
+                    alert('Ошибка: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
 
         // Обработка клика на "Редактировать"
         document.querySelectorAll('.edit-btn').forEach(button => {
@@ -457,3 +511,4 @@ try {
     <script src="script.js"></script> <!-- Если есть дополнительный script.js -->
 </body>
 </html>
+```
