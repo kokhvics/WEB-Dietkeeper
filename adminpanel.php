@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Проверка, зарегистрирован ли пользователь
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['username'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
 // Подключаем файл с функциями БД
 require_once 'connect_db.php';
 
@@ -69,16 +77,16 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Подключение Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <header class="bg-light sticky-top">
         <div class="container d-flex justify-content-between align-items-center py-2">
-            <!-- Логотип -->
-            <a href="index.php" class="navbar-brand text-decoration-none text-dark">
-                <img src="SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
+            <a href="adminpanel.php" class="navbar-brand text-decoration-none text-dark">
+                <img src="../SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
                 <span class="site-title">DietKeeper</span>
             </a>
+            <a href="../logout.php" class="btn btn-danger">Выйти</a>
         </div>
     </header>
     
@@ -508,7 +516,7 @@ try {
             });
         });
     </script>
-    <script src="script.js"></script> <!-- Если есть дополнительный script.js -->
+    <script src="../script.js"></script> <!-- Если есть дополнительный script.js -->
 </body>
 </html>
 ```
