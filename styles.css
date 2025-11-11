@@ -635,7 +635,54 @@ h5 {
 	}
 }
 
+.btn-github {
+	background-color: #333;
+	color: white;
+	border: none;
+	padding: 12px;
+	border-radius: 30px;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10px;
+	width: 100%;
+	transition: background-color 0.3s;
+}
+.btn-github:hover {
+	background-color: #555;
+	color: white;
+}
+.divider {
+	text-align: center;
+	margin: 20px 0;
+	color: #6c757d;
+	position: relative;
+}
+.divider::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background: #dee2e6;
+}
+.divider span {
+	background: white;
+	padding: 0 15px;
+}
 
+.login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+.login-form {
+	width: 30%;
+	min-width: 300px;
+}
 
 /* Стили для кнопок */
 .btn {
@@ -647,6 +694,8 @@ h5 {
 	border-radius: 20px; /* Закругленные углы */
 	transition: background-color 0.3s ease; /* Плавное изменение фона при наведении */
 }
+
+
 
 .btn:hover {
 	background-color: #8BC34A; /* Слегка темнее при наведении */

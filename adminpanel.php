@@ -1,9 +1,26 @@
 <?php
 session_start();
 
-// Проверка, зарегистрирован ли пользователь
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['username'])) {
-    header('Location: ../login.php');
+// Отладка: что в сессии?
+echo "<!-- Отладка сессии: ";
+echo "user_id: " . ($_SESSION['user_id'] ?? 'НЕТ');
+echo ", username: " . ($_SESSION['username'] ?? 'НЕТ');
+echo " -->";
+
+// Проверка авторизации для обычных пользователей
+if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
+    // Пользователь авторизован - НЕ делаем редирект!
+    echo "<!-- Пользователь авторизован -->";
+} 
+// Проверка для GitHub пользователей
+elseif (isset($_SESSION['github_oauth']) && $_SESSION['github_oauth'] === true) {
+    // Пользователь авторизован через GitHub - НЕ делаем редирект!
+    echo "<!-- Пользователь авторизован через GitHub -->";
+}
+else {
+    // Пользователь НЕ авторизован - только тогда делаем редирект
+    echo "<!-- Пользователь НЕ авторизован, делаем редирект -->";
+    header('Location: login.php');
     exit;
 }
 
