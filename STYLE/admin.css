@@ -1,0 +1,23 @@
+:root {
+    --primary-color: #9ACD32;
+}
+.table-header-green th {
+    background-color: var(--primary-color) !important; /* #9ACD32 */
+    color: #212529 !important; /* тёмный текст для контраста */
+    font-weight: 600;
+    border-color: var(--primary-color) !important;
+    text-align: center;
+}
+/* Опционально: выравнивание ячеек */
+.table-header-green th,
+.table-striped tbody tr td {
+    vertical-align: middle;
+    text-align: center;
+}
+.table {
+    border: 1px solid #dee2e6;
+}
+.table th,
+.table td {
+    border: 1px solid #dee2e6;
+}

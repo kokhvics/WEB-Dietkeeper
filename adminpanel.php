@@ -95,6 +95,7 @@ try {
     <!-- Подключение Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <header class="bg-light sticky-top">
@@ -153,7 +154,7 @@ try {
                         <?php else: ?>
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="viewTable">
-                                    <thead class="table-dark">
+                                    <thead class="table-header-green">
                                         <tr>
                                             <th>ID</th>
                                             <th>Название</th>
@@ -202,7 +203,7 @@ try {
                         <?php if (!empty($products)): ?>
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="editTable">
-                                    <thead class="table-dark">
+                                    <thead class="table-header-green">
                                         <tr>
                                             <th>ID</th>
                                             <th>Название</th>
@@ -296,7 +297,7 @@ try {
                         <?php if (!empty($products)): ?>
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="deleteTable">
-                                    <thead class="table-dark">
+                                    <thead class="table-header-green">
                                         <tr>
                                             <th>ID</th>
                                             <th>Название</th>
