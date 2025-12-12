@@ -15,7 +15,7 @@
     /* Размеры шрифтов */
     --font-size-small: 0.875rem;
     --font-size-base: 1rem;
-    --font-size-large: 1.25rem;
+    --font-size-large: 2.25rem;
     --font-size-xlarge: 1.5rem;
 
     /* Отступы */
@@ -89,6 +89,7 @@ header.sticky-top {
     text-decoration: none;
     cursor: pointer;
 }
+
 
 
 /* Иконки на кнопках - выравнивание по одной линии с текстом */

@@ -14,28 +14,56 @@
 </head>
 <body>
     <!-- Шапка -->
-    <header class="bg-light sticky-top">
-        <div class="container d-flex justify-content-between align-items-center py-2">
+        <header class="bg-light sticky-top position-relative">
+            <div class="container d-flex justify-content-between align-items-center py-2">
                 <!-- Логотип -->
-                <div class="navbar-brand">
+                <a href="index.php" class="navbar-brand text-decoration-none text-dark">
                     <img src="SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
                     <span class="site-title">DietKeeper</span>
+                </a>
+
+                <!-- Навигация -->
+                <div class="d-flex gap-2 align-items-center">
+                    <div class="d-none d-md-flex gap-2">
+                        <!-- Кнопка "Примеры меню" -->
+                        <a href="categories.html" class="btn">
+                            <i class="bi bi-clipboard2-data me-1"></i> Примеры меню
+                        </a>
+
+                        <!-- Кнопка "Продукты" -->
+                        <a href="products.php" class="btn">
+                            <i class="bi bi-basket-fill me-1"></i> Продукты
+                        </a>
+
+                        <!-- Кнопка "Помощь" -->
+                        <a href="help.html" class="btn">
+                            <i class="bi bi-question-circle me-1"></i> Помощь
+                        </a>
+                    </div>
+
+                    <!-- Кнопка "Ещё" на мобильных -->
+                    <div class="d-md-none">
+                        <button class="btn btn-light border rounded-circle p-2" id="mobile-nav-toggle">
+                            <i class="bi bi-three-dots fs-4"></i>
+                        </button>
+                        <!-- Выпадающее меню -->
+                        <div id="mobile-nav-menu" class="d-none bg-white border rounded shadow position-absolute z-3" style="right: 1rem; top: 100%; min-width: 200px; margin-top: 0.5rem;">
+                            <div class="p-2">
+                                <a href="categories.html" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                    <i class="bi bi-clipboard2-data me-2"></i> Примеры меню
+                                </a>
+                                <a href="products.php" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                    <i class="bi bi-basket-fill me-2"></i> Продукты
+                                </a>
+                                <a href="help.html" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                    <i class="bi bi-question-circle me-2"></i> Помощь
+                                </a>
+                            </div>
+                        </div>
+                    </div>   
                 </div>
-
-            <!-- Навигация -->
-            <div class="d-flex gap-2">
-                <!-- Кнопка "Категории" в шапке -->
-                <a href="categories.html" class="btn">
-                    <i class="bi bi-grid-fill me-2"></i> Категории
-                </a>
-
-                <!-- Кнопка "Продукты" -->
-                <a href="products.php" class="btn">
-                    <i class="bi bi-basket-fill me-2"></i> Продукты
-                </a>
             </div>
-        </div>
-    </header>
+        </header>
 
     <!-- Основной контент -->
     <div class="container mt-5">
@@ -256,6 +284,23 @@
                 trigger: 'hover'
             });
         });
+
+        //переключения меню
+        document.getElementById('mobile-nav-toggle')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('mobile-nav-menu');
+            menu.classList.toggle('d-none');
+        });
+
+        // Закрывать меню при клике вне его
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobile-nav-menu');
+            const button = document.getElementById('mobile-nav-toggle');
+            if (menu && !menu.contains(e.target) && e.target !== button) {
+                menu.classList.add('d-none');
+            }
+        });
+              
     </script>
 </body>
 </html>
