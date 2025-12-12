@@ -1,0 +1,127 @@
+/* index.css - Стили для главной страницы */
+
+/* Стили для категорий */
+.list-group-item.active-category {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border-color: var(--primary-color);
+}
+
+.categories-sidebar .btn {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    border-radius: 30px;
+    margin-bottom: 8px;
+}
+
+.list-group {
+    background-color: #F8F9FA;
+}
+
+/* Активная кнопка в сайдбаре становится желтой */
+.categories-sidebar .btn.active-category {
+    background-color: var(--secondary-color);
+    color: var(--dark-text);
+    font-weight: bold;
+}
+
+.categories-sidebar .btn.active-category:hover {
+    background-color: #FFB900;
+    transform: scale(1.02);
+}
+
+/* Остальные стили остаются без изменений */
+.list-group-item.active-category {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    border-color: var(--primary-color);
+}
+
+.show-all-btn {
+    margin-top: 10px;
+    border-radius: 20px !important;
+}
+
+
+
+
+/* Стили для строки поиска */
+.search-bar {
+    border: 3px solid var(--primary-color);
+    border-radius: 30px;
+}
+
+.search-bar .form-control {
+    border: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: transparent;
+    color: var(--primary-color);
+    padding: 10px 30px;
+}
+
+.search-bar .form-control::placeholder {
+    color: var(--primary-color);
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+.search-bar .input-group-text {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-right: 15px;
+}
+
+.search-bar .input-group-text svg {
+    color: var(--primary-color);
+}
+
+/* Продукты */
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.15s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+}
+
+.card-body {
+    padding: var(--spacing-md);
+}
+
+.card-text {
+    text-align: center;
+}
+
+/* Адаптивность для категорий на мобильных */
+@media (max-width: 992px) {
+    .categories-sidebar {
+        display: none;
+    }
+
+    .categories-sidebar.active {
+        display: block;
+        animation: slideDown 0.3s ease;
+        padding-bottom: 5%;
+    }
+}
+/* Подсказки для Б/Ж/У */
+.nutrients-info span[data-bs-toggle="tooltip"] {
+    border-bottom: 1px dashed #9ACD32;
+    cursor: help;
+    font-weight: 500;
+}
+.nutrients small {
+    font-size: 0.95rem !important; /* или 1rem, если хотите ещё крупнее */
+    font-weight: 500;
+    color: #495057;
+}

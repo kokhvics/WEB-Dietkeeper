@@ -1,758 +1,154 @@
-/* Основные стили */
+/* --- Переменные для дизайн-системы --- */
+:root {
+    /* Цвета */
+    --primary-color: #9ACD32;
+    --secondary-color: #FFC107;
+    --error-color: #DC3545;
+    --success-color: #28A745;
+    --warning-color: #FFC107;
+    --info-color: #7baee2;
+    --light-bg: #F8F9FA;
+    --dark-text: #212529;
+    --light-text: #FFFFFF;
+    --border-color: #DEE2E6;
+
+    /* Размеры шрифтов */
+    --font-size-small: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-xlarge: 1.5rem;
+
+    /* Отступы */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Размеры кнопок */
+    --btn-height: 44px;
+}
+
+/* --- Базовые стили --- */
 body {
-	font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #F8F9FA;
+    margin: 0;
+    padding: 0;
 }
 
-/* Переопределить конфликтующие стили */
-@media (max-width: 992px) {
-	.filters-container {
-			background: #fff;
-			z-index: 1000;
-			position: relative;
-			box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-	}
-	
-	.filters-left, 
-	.filters-right {
-			width: 100% !important;
-	}
+/* --- Стили для шапки --- */
+header {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Переопределение стилей для ползунка */
-.form-range::-webkit-slider-thumb {
-	background-color: #9ACD32; /* Цвет ползунка */
-	border: none;
-	border-radius: 50%;
-	width: 1rem;
-	height: 1rem;
-	cursor: pointer;
-	border-color: transparent; /* Убираем границу */
-	outline: none;
+header.bg-light {
+    background-color: var(--light-bg);
 }
 
-.form-range::-moz-range-thumb {
-	background-color: #9ACD32; /* Цвет ползунка для Firefox */
-	border: none;
-	border-radius: 50%;
-	width: 1rem;
-	height: 1rem;
-	cursor: pointer;
-	border-color: transparent; /* Убираем границу */
-	outline: none;
+header.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
 }
 
-/* Цвет трека */
-.form-range::-webkit-slider-runnable-track {
-	background-color: rgba(154, 205, 50, 0.2); /* Приглушенный зеленый */
-	border-radius: 1rem;
-	height: 0.5rem;
-}
-
-.form-range::-moz-range-track {
-	background-color: rgba(154, 205, 50, 0.2); /* Приглушенный зеленый */
-	border-radius: 1rem;
-	height: 0.5rem;
-}
-
-/* Удаление свечения (фокуса) для чекбоксов */
-.form-check-input:focus {
-	box-shadow: none; /* Убираем тень */
-	border-color: transparent; /* Убираем границу */
-	outline: none; /* Убираем обводку */
-}
-
-/* Цвета для выбранных чекбоксов */
-.form-check-input:checked {
-	background-color: #9ACD32; /* Зеленый фон */
-	border-color: #9ACD32; /* Зеленая граница */
-}
-
-/* Стили для логотипа */
+/* Логотип в шапке */
 .navbar-brand {
-	display: flex;
-	align-items: center;
-	gap: 5px; /* Отступ между иконкой и текстом */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
 }
 
 .site-title {
-	font-family: 'Arial', sans-serif; /* Шрифт */
-	font-size: 1.5rem; /* Увеличенный размер текста */
-	color: #9ACD32; /* Зеленый цвет текста */
-	font-weight: bold; /* Жирный шрифт */
-	font-style: italic; /* Курсив */
-}
-
-/* Навигационная панель */
-.navbar {
-	background-color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: var(--font-size-large);
+    color: var(--primary-color);
+    font-weight: bold;
+    font-style: italic;
 }
 
 .navbar-brand img {
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
-.nav-link {
-	color: #000;
-}
-
-.nav-link.active {
-	background-color: #9ACD32;
-	color: #fff;
-}
-
-/* Поиск */
-.form-control {
-	border-radius: 20px;
-}
-
-/* Скрыть кнопку "Категории" в шапке на мобильных */
-.navbar .btn-outline-success {
-	display: none;
-}
-
-@media (min-width: 768px) {
-	.navbar .btn-outline-success {
-			display: inline-block;
-	}
-}
-
-/* Стили для кнопки "Показать категории" */
-.show-categories {
-	background-color: #9ACD32; /* Зеленый фон */
-	color: #fff; /* Белый текст */
-	border-radius: 30px; /* Закругленные углы */
-	padding: 10px 20px; /* Отступы внутри кнопки */
-	transition: all 0.3s ease; /* Плавный переход */
-}
-
-.show-categories:hover {
-	background-color: #8BC34A; /* Темно-зеленый при наведении */
-}
-
-@media (max-width: 992px) {
-	/* Скрыть категории по умолчанию */
-	.categories-sidebar {
-		display: none; /* Скрыть по умолчанию */
-	}
-
-	/* Показать категории при активации */
-	.categories-sidebar.active {
-		display: block;
-		animation: slideDown 0.3s ease;
-		padding-bottom: 5%;
-	}
-
-	@keyframes slideDown {
-		from { opacity: 0; transform: translateY(-10px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-}
-
-/* Стили для кнопки "Показать еще" */
-.btn-show-more {
-	background-color: #9ACD32; /* Зеленый фон */
-	color: #fff; /* Белый текст */
-	border-radius: 30px; /* Закругленные углы */
-	margin-top: 10px;
-}
-
-/* Стили для строки поиска */
-.search-bar {
-	border: 3px solid #9ACD32; /* Увеличиваем толщину рамки */
-	border-radius: 30px; /* Закругляем углы */
-}
-
-.search-bar .form-control {
-	border: none;
-	border-top-left-radius: 30px;
-	border-bottom-left-radius: 30px;
-	background-color: transparent;
-	color: #9ACD32; /* Цвет текста соответствует рамке */
-	padding: 10px 30px; /* Добавляем отступы внутри поля ввода */
-}
-
-.search-bar .form-control::placeholder {
-	color: #9ACD32; /* Цвет placeholder'а также соответствует рамке */
-	opacity: 0.7;
-	font-weight: 500; /* Немного прозрачности для placeholder'а */
-}
-
-.search-bar .input-group-text {
-	background-color: transparent;
-	border: none;
-	padding: 0;
-	margin-right: 15px; /* Добавляем отступ между иконкой и правым краем */
-}
-
-.search-bar .input-group-text svg {
-	color: #9ACD32; /* Цвет иконки соответствует рамке */
-}
-
-/* Категории */
-.list-group {
-	background-color: #fff;
-}
-
-.list-group-item {
-	background-color: #f8f9fa;
-	border: none;
-	border-radius: 10px;
-	margin-bottom: 10px;
-}
-
-.list-group-item.active {
-	background-color: #ffc107;
-	color: #fff;
-}
-list-group-item.active-category {
-	background-color: #9ACD32;
-	color: white;
-	border-color: #9ACD32;
-}
-
-
-/* Желтые блоки категорий */
-.yellow-block {
-	background-color: #ffc107;
-	color: #fff;
-	border: none;
-	border-radius: 30px;
-	padding: 12px 20px;
-	margin: 8px 0;
-	text-align: center;
-	transition: transform 0.2s;
-}
-
-.yellow-block:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-
-/* Стили для табов */
-.nav-tabs .nav-link {
-	background-color: #FFB900; /* Желтый фон */
-	color: #000; /* Черный текст */
-	border: none;
-	border-radius: 10px;
-	margin-bottom: 10px;
-	padding: 10px 20px; /* Увеличение внутренних отступов */
-	font-weight: bold; /* Жирный шрифт */
-}
-
-.nav-tabs .nav-link.active {
-	background-color: #FDBA00; /* Более темный желтый фон для активного таба */
-	color: #000; /* Черный текст */
-}
-
-.nav-tabs .nav-link:hover {
-	background-color: #FDBA00; /* Более темный желтый фон при наведении */
-}
-/* Стили для заголовков колонок */
-h5 {
-	font-size: 1.2rem;
-	font-weight: bold;
-	margin-bottom: 15px;
-}
-
-/* Стили для списков */
-.list-unstyled li {
-	margin-bottom: 10px;
-	font-size: 1rem;
-}
-/* Стили для заголовков категорий */
-.category-header {
-	font-size: 1.2rem;
-	font-weight: bold;
-	color: #333;
-}
-
-/* Стили для заголовков категорий */
-.category-header {
-	font-size: 1.2rem;
-	font-weight: bold;
-	color: #333;
-	text-align: center; /* Выравнивание заголовков по центру */
-}
-
-/* Стили для toggle list */
-.toggle-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 10px;
-	background-color: #9ACD32; /* Зеленый фон */
-	color: #fff; /* Белый текст */
-	font-size: 1rem;
-	font-weight: bold;
-	border: none;
-	border-radius: 30px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	margin-bottom: 10px; /* Отступ между кнопками */
-	flex-direction: column;
-	align-items: center;
-}
-
-.toggle-header:hover {
-	background-color: #8BC34A;
-	flex-direction: column;
-	align-items: center; /* Темно-зеленый при наведении */
-}
-
-.toggle-item {
-	display: flex;
-	flex-direction: column;
-	justify-content: center; /* Выравнивание по центру столбца */
-	border-radius: 30px;
-	text-align: center;
-	text-justify: auto;
-	gap: 10px; /* Интервал между кнопками */
-}
-
-.toggle-content {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	max-height: 0; /* Скрываем содержимое по умолчанию */
-	overflow: hidden;
-	transition: max-height 0.3s ease, padding 0.3s ease;
-	flex-direction: column;
-	align-items: center;
-	
-}
-
-.toggle-content li {
-	padding: 10px;
-	background-color: #f9f9f9;
-	border-bottom: 1px solid #ddd;
-}
-
-.toggle-content li:last-child {
-	border-bottom: none;
-}
-
-.toggle-item.active .toggle-content {
-	max-height: 200px; /* Ограничение высоты для анимации */
-	padding: 10px 0;
-}
-
-/* Адаптивность для табов */
-@media (max-width: 768px) {
-	.nav-tabs .nav-link {
-			width: 100%; /* Полная ширина на мобильных устройствах */
-			text-align: center;
-	}
-}
-
-/* Продукты */
-.card {
-	border: none;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-img-top {
-	object-fit: cover;
-	height: 200px;
-}
-
-.card-body {
-	padding: 10px;
-}
-
-.card-text {
-	text-align: center;
-}
-
-/* Табы */
-.nav-tabs .nav-link {
-	background-color: #ffc107;
-	color: #fff;
-	border: none;
-	border-radius: 10px;
-	margin-bottom: 10px;
-}
-
-.nav-tabs .nav-link.active {
-	background-color: #fff;
-	color: #000;
-}
-
-.nav-tabs .nav-link:hover {
-	background-color: #ffaf00;
-}
-
-/* Фильтры */
-.filters-container {
-	display: none; /* Скрыть фильтры по умолчанию на мобильных устройствах */
-}
-
-@media (min-width: 768px) {
-	.filters-container {
-			display: block; /* Показать фильтры на планшетах и десктопах */
-	}
-}
-
-.filter-group {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.filter-item {
-	display: flex;
-	align-items: center;
-	margin-bottom: 10px;
-}
-
-.filter-item input[type="checkbox"] {
-	margin-right: 10px;
-}
-
-.filter-item span {
-	color: #333;
-}
-
-.range-slider {
-	margin-top: 20px;
-}
-
-.range-slider label {
-	margin-right: 10px;
-}
-
-/* Стили для галереи продуктов */
-.gallery .card {
-	border: none;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.gallery .card-img-top {
-	object-fit: cover;
-	height: 200px;
-}
-
-.gallery .card-body {
-	padding: 10px;
-}
-
-.gallery .card-text {
-	text-align: center;
-}
-
-/* Адаптивность */
-@media (max-width: 767px) {
-	.gallery .row {
-			--bs-gutter-x: 1.5rem; /* Уменьшить отступ между колонками */
-	}
-
-	.gallery .row-cols-1,
-	.gallery .row-cols-md-3,
-	.gallery .row-cols-lg-4 {
-			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Адаптивная сетка для мобильных устройств */
-	}
-}
-
-/* Стили для контейнера фильтров */
-.filters-container {
-	border: 2px solid #9ACD32; /* Зеленая рамка */
-	border-radius: 20px;
-	padding: 20px;
-	margin-bottom: 2%;
-}
-
-/* Стили для левой части (фильтры) */
-.filters-left {
-	width: 25%; /* Ширина левой части */
-	display: flex;
-	flex-direction: column;
-	gap: 15px; /* Отступ между группами фильтров */
-}
-
-.filter-group {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.filter-item {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
-
-.filter-checkbox {
-	accent-color: #9ACD32; /* Цвет чекбоксов */
-	border: 2px solid #9ACD32; /* Зеленая рамка */
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-}
-
-.filter-label {
-	font-size: 1rem;
-	color: #333;
-}
-
-/* Стили для правой части (слайдер) */
-.filters-right {
-	width: 30%; /* Ширина правой части */
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.range-slider {
-	display: flex;
-	flex-direction: column;
-	gap: 30px;
-	accent-color: #9ACD32;
-}
-
-.slider-container {
-	position: relative;
-}
-
-.slider-markers {
-	display: flex;
-	justify-content: space-between;
-	position: absolute;
-	top: -20px;
-	left: 0;
-	right: 0;
-}
-/* Стили для чекбоксов */
-.filter-checkbox {
-	accent-color: #9ACD32; /* Цвет чекбоксов при выборе */
-	border: 2px solid #9ACD32; /* Зеленая рамка */
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	appearance: none; /* Убираем стандартное оформление чекбокса */
-	position: relative;
-	outline: none; /* Убираем синюю рамку при фокусе */
-}
-
-.filter-checkbox:checked {
-	background-color: #9ACD32; /* Фон чекбокса при выборе */
-	border: 2px solid #9ACD32;
-	
-}
-
-
-
-
-/* Стили для слайдера калорий */
-.calories-range {
-	accent-color: #9ACD32; /* Цвет ползунков */
-}
-
-.slider-container {
-	position: relative;
-}
-
-.slider-markers {
-	display: flex;
-	justify-content: space-between;
-	position: absolute;
-	top: -20px;
-	left: 0;
-	right: 0;
-}
-
-.slider-marker {
-	font-size: 0.8rem;
-	color: #9ACD32; /* Цвет маркеров */
-}
-
-/* Переписать медиазапросы */
-/* Скрыть фильтры по умолчанию на мобильных */
-.filters-container {
-	display: block;
-}
-
-/* Показать кнопку только на мобильных */
-.show-filters-button {
-	display: none !important;
-	margin: 15px 0;
-	border-radius: 30px;
-	padding: 12px;
-	font-weight: bold;
-}
-
-@media (max-width: 992px) {
-	.filters-container {
-			display: none;
-	}
-	
-	.show-filters-button {
-			display: block !important;
-	}
-	
-	.filters-container.active {
-			display: block;
-			animation: slideDown 0.3s ease;
-	}
-}
-
-@keyframes slideDown {
-	from { opacity: 0; transform: translateY(-10px); }
-	to { opacity: 1; transform: translateY(0); }
-}
-
-/* Стили для заголовков категорий */
-.category-tabs {
-	display: flex;
-	justify-content: center;
-}
-
-.category-header {
-	background-color: #FFB900; /* Желтый фон */
-	color: #fff; /* Белый текст */
-	border: none;
-	border-radius: 30px;
-	padding: 15px 15px;
-	margin-bottom: 10px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-}
-
-.category-header.active {
-	background-color: #FDBA00;
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 767px) {
-	.category-tabs {
-			flex-direction: column;
-			align-items: center;
-	}
-
-	.category-header {
-			width: 70%;
-			margin: 5px 0;
-	}
-}
-
-.btn-github {
-	background-color: #333;
-	color: white;
-	border: none;
-	padding: 12px;
-	border-radius: 30px;
-	text-decoration: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 10px;
-	width: 100%;
-	transition: background-color 0.3s;
-}
-.btn-github:hover {
-	background-color: #555;
-	color: white;
-}
-.divider {
-	text-align: center;
-	margin: 20px 0;
-	color: #6c757d;
-	position: relative;
-}
-.divider::before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 0;
-	right: 0;
-	height: 1px;
-	background: #dee2e6;
-}
-.divider span {
-	background: white;
-	padding: 0 15px;
-}
-
-.login-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-}
-.login-form {
-	width: 30%;
-	min-width: 300px;
-}
-
-/* Стили для кнопок */
+/* --- Единый стиль для всех кнопок --- */
 .btn {
-	font-size: 1rem;
-	padding: 0.5rem 1.5rem;
-	background-color: #9ACD32; /* Зеленый фон */
-	color: #000; /* Черный текст */
-	border: none; /* Без рамки */
-	border-radius: 20px; /* Закругленные углы */
-	transition: background-color 0.3s ease; /* Плавное изменение фона при наведении */
+    font-size: var(--font-size-base);
+    padding: 0.5rem 1.5rem;
+    margin: 20px 0px 20px 0px;
+    background-color: var(--primary-color);
+    color: var(--dark-text);
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.15s ease-in-out;
+    height: var(--btn-height);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 
-
-.btn:hover {
-	background-color: #8BC34A; /* Слегка темнее при наведении */
-}
-
-/* Иконки на кнопках */
+/* Иконки на кнопках - выравнивание по одной линии с текстом */
 .btn i {
-	margin-right: 5px; /* Отступ между иконкой и текстом */
-	color: #000; /* Черный цвет иконки */
+    margin-right: 8px;
+    color: var(--dark-text);
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1;
 }
 
-/* Стили для шапки */
-header {
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для разделения шапки */
+/* Варианты кнопок */
+.btn-outline-success {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
 }
 
+.btn-outline-success:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-text);
+}
 
+.btn-danger {
+    background-color: var(--error-color);
+    color: var(--light-text);
+}
 
+.btn-danger:hover {
+    background-color: #c82333;
+    color: var(--light-text);
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    border: 2px solid #6c757d;
+    color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: var(--light-text);
+}
+
+/* Кнопки разного размера */
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: var(--font-size-small);
+    height: 36px;
+}
+
+.btn-lg {
+    padding: 0.75rem 2rem;
+    font-size: var(--font-size-large);
+    height: 52px;
+}
+
+/* --- Анимации --- */
 @keyframes slideDown {
-	from { opacity: 0; transform: translateY(-10px); }
-	to { opacity: 1; transform: translateY(0); }
-}
-.filter-group {
-	margin-bottom: 1rem;
-}
-.filter-item {
-	display: block;
-	margin-bottom: 0.5rem;
-}
-.slider-container {
-	position: relative;
-	margin: 2rem 0;
-}
-.calories-range {
-	width: 100%;
-	margin: 0.5rem 0;
-}
-.slider-markers {
-	display: flex;
-	justify-content: space-between;
-	margin-top: -0.5rem;
-}
-.slider-marker {
-	font-size: 0.8rem;
-}
-.filter-checkbox:checked + .filter-label {
-	font-weight: bold;
-	color: #198754;
-}
-.filters-container {
-	margin-bottom: 2rem;
-}
-@media (max-width: 991.98px) {
-	.filters-container {
-		display: none;
-	}
-	.filters-container.show {
-		display: block;
-	}
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

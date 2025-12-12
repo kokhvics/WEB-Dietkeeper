@@ -533,7 +533,6 @@ try {
             });
         });
     </script>
-    <script src="../script.js"></script> <!-- Если есть дополнительный script.js -->
 </body>
 </html>
 ```
