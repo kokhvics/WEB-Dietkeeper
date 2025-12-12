@@ -103,14 +103,14 @@
                     $isAllSelected = empty($selectedCategory);
                     
                     // Кнопка "Показать все" - всегда зеленая
-                    echo '<a href="?" class="btn btn-success mb-2 ' . ($isAllSelected ? 'active-category' : '') . '">';
+                    echo '<a href="?" class="btn ' . ($isAllSelected ? 'active-category' : '') . '">';
                     echo '    <i class="bi bi-grid-3x3-gap-fill me-2"></i>Показать все';
                     echo '</a>';
                     
                     // Выводим категории как кнопки с основным стилем
                     foreach ($categories as $category => $icon) {
                         $isActive = ($selectedCategory === $category);
-                        echo '<a href="?category=' . urlencode($category) . '" class="btn btn-success mb-2 ' . ($isActive ? 'active-category' : '') . '">';
+                        echo '<a href="?category=' . urlencode($category) . '" class="btn mb-2 ' . ($isActive ? 'active-category' : '') . '">';
                         echo '    <i class="' . $icon . ' me-2"></i>' . htmlspecialchars($category);
                         echo '</a>';
                     }

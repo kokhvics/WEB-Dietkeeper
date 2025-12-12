@@ -21,3 +21,16 @@
 .table td {
     border: 1px solid #dee2e6;
 }
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(154, 205, 50, 0.25) !important;
+}
+.form-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(154, 205, 50, 0.25) !important;
+}
+.form-select:focus::-webkit-outer-spin-button,
+.form-select:focus::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

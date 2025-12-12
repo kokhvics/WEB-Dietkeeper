@@ -4,7 +4,7 @@
     --primary-color: #9ACD32;
     --secondary-color: #FFC107;
     --error-color: #DC3545;
-    --success-color: #28A745;
+    --success-color: #87b42c;
     --warning-color: #FFC107;
     --info-color: #7baee2;
     --light-bg: #F8F9FA;
@@ -76,7 +76,6 @@ header.sticky-top {
 .btn {
     font-size: var(--font-size-base);
     padding: 0.5rem 1.5rem;
-    margin: 20px 0px 20px 0px;
     background-color: var(--primary-color);
     color: var(--dark-text);
     border: none;
@@ -155,6 +154,10 @@ header.sticky-top {
 }
 
 .form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(154, 205, 50, 0.25) !important; /* #9ACD32 с прозрачностью */
+}
+.form-check-input:focus {
     border-color: var(--primary-color) !important;
     box-shadow: 0 0 0 0.25rem rgba(154, 205, 50, 0.25) !important; /* #9ACD32 с прозрачностью */
 }

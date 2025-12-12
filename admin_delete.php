@@ -60,7 +60,7 @@ try {
                 <img src="../SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
                 <span class="site-title">DietKeeper</span>
             </a>
-            <a href="../logout.php" class="btn btn-danger rounded-pill px-3">Выйти</a>
+            <a href="../logout.php" class="btn">Выйти</a>
         </div>
     </header>
 

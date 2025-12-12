@@ -138,8 +138,8 @@
 
                     <!-- Кнопки с увеличенным отступом -->
                     <div class="mt-4 d-flex gap-3 flex-wrap">
-                        <button type="submit" class="btn btn-success">Применить фильтры</button>
-                        <a href="products.php" class="btn btn-outline-secondary">Сбросить фильтры</a>
+                        <button type="submit" class="btn ">Применить фильтры</button>
+                        <a href="products.php" class="btn">Сбросить фильтры</a>
                     </div>
                 </form>
             </div>
