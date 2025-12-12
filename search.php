@@ -1,7 +1,7 @@
 <?php
-// Настройка отображения ошибок
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// Настройка отображения ошибок (для разработки)
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 // Параметры подключения
@@ -11,31 +11,39 @@ $password = "1234";
 $dbname = "dietkeeper";
 
 try {
-    // Подключение к базе данных
     $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Получаем параметр запроса
-    $query = isset($_GET['query']) ? trim($_GET['query']) : '';
+    $query = trim($_GET['query'] ?? '');
 
-    if (strlen($query) >= 2) {
-        // SQL-запрос для поиска
-        $sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url 
-                FROM products 
-                WHERE name LIKE :query 
-                LIMIT 10"; // Ограничиваем количество результатов
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':query', '%' . $query . '%', PDO::PARAM_STR);
-        $stmt->execute();
-
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Возвращаем результаты в формате JSON
-        echo json_encode($results);
-    } else {
+    // Если запрос пуст — возвращаем пустой массив
+    if (strlen($query) < 1) {
         echo json_encode([]);
+        exit;
     }
+
+    // Подготавливаем SQL: ищем либо по ID (если запрос — число), либо по названию
+    $sql = "SELECT id, name, category, protein, fat, carbs, calories, image_url 
+            FROM products 
+            WHERE 
+                (:is_numeric = 1 AND id = :id) 
+                OR 
+                (name LIKE :name_like)";
+
+    $is_numeric = is_numeric($query) ? 1 : 0;
+    $id = (int)$query;
+    $name_like = "%{$query}%";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':is_numeric', $is_numeric, PDO::PARAM_INT);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->bindValue(':name_like', $name_like, PDO::PARAM_STR);
+
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($results);
+
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);

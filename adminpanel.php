@@ -94,7 +94,7 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Подключение Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="bg-light sticky-top">
@@ -113,22 +113,22 @@ try {
             <div class="col-md-2 sidebar">
                 <ul class="nav flex-column nav-tabs" id="adminTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="view-tab" data-bs-toggle="tab" href="#view" role="tab" aria-controls="view" aria-selected="true">
+                        <a class="btn active-page mt-3" id="view-tab" data-bs-toggle="tab" href="#view" role="tab" aria-controls="view" aria-selected="true">
                             <i class="bi bi-search me-2"></i> Просмотр
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="edit-tab" data-bs-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">
+                        <a class="btn mt-3" id="edit-tab" data-bs-toggle="tab" href="#edit" role="tab" aria-controls="edit" aria-selected="false">
                             <i class="bi bi-file-text me-2"></i> Редактирование
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="create-tab" data-bs-toggle="tab" href="#create" role="tab" aria-controls="create" aria-selected="false">
+                        <a class="btn mt-3" id="create-tab" data-bs-toggle="tab" href="#create" role="tab" aria-controls="create" aria-selected="false">
                             <i class="bi bi-plus me-2"></i> Создание
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="delete-tab" data-bs-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">
+                        <a class="btn mt-3" id="delete-tab" data-bs-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">
                             <i class="bi bi-trash me-2"></i> Удаление
                         </a>
                     </li>
@@ -144,7 +144,7 @@ try {
                     <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
                         <h2>Все продукты</h2>
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Поиск по ID, названию или категории">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Поиск по ID или названию">
                         </div>
                         <?php if (isset($error)): ?>
                             <div class="alert alert-danger">
@@ -397,50 +397,52 @@ try {
         // JavaScript для обработки форм, поиска и AJAX
 
         // Обработка поиска
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchValue = this.value.trim();
-            const formData = new FormData();
-            formData.append('action', 'search');
-            formData.append('search', searchValue);
+        // Динамический поиск через search.php (как на главной)
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const query = this.value.trim();
+            const tableBody = document.getElementById('viewTableBody');
+            const recordCount = document.getElementById('recordCount');
 
-            fetch('adminpanel.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const tbody = document.getElementById('viewTableBody');
-                    tbody.innerHTML = '';
-                    if (data.products.length > 0) {
-                        data.products.forEach(product => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${product.id || ''}</td>
-                                <td>${product.name || ''}</td>
-                                <td>${product.category || ''}</td>
-                                <td>${product.protein || ''}</td>
-                                <td>${product.fat || ''}</td>
-                                <td>${product.carbs || ''}</td>
-                                <td>${product.calories || ''}</td>
-                                <td>
-                                    ${product.image_url ? 
-                                        `<img src="${product.image_url}" alt="${product.name || ''}" width="50" class="img-thumbnail">` : 
-                                        'Нет изображения'}
-                                </td>
-                            `;
-                            tbody.appendChild(row);
-                        });
-                        document.getElementById('recordCount').textContent = `Всего записей: ${data.products.length}`;
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Нет результатов</td></tr>';
-                        document.getElementById('recordCount').textContent = 'Всего записей: 0';
-                    }
-                } else {
-                    alert('Ошибка: ' + data.message);
+            if (query.length >= 1) {
+                fetch(`search.php?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(products => {
+                        tableBody.innerHTML = '';
+                        if (products.length > 0) {
+                            products.forEach(p => {
+                                const row = `<tr>
+                                    <td>${p.id || ''}</td>
+                                    <td>${p.name || ''}</td>
+                                    <td>${p.category || ''}</td>
+                                    <td>${p.protein || ''}</td>
+                                    <td>${p.fat || ''}</td>
+                                    <td>${p.carbs || ''}</td>
+                                    <td>${p.calories || ''}</td>
+                                    <td>${p.image_url ? `<img src="${p.image_url}" width="50" class="img-thumbnail">` : 'Нет изображения'}</td>
+                                </tr>`;
+                                tableBody.innerHTML += row;
+                            });
+                            if (recordCount) recordCount.textContent = `Всего записей: ${products.length}`;
+                        } else {
+                            tableBody.innerHTML = '<tr><td colspan="8" class="text-center">Ничего не найдено</td></tr>';
+                            if (recordCount) recordCount.textContent = 'Всего записей: 0';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Ошибка поиска:', err);
+                        tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-danger">Ошибка загрузки</td></tr>';
+                    });
+            } else {
+                // Восстанавливаем ИСХОДНУЮ таблицу БЕЗ перезагрузки!
+                // Для этого нужно сохранить её при загрузке
+                if (!window.originalTableHtml) {
+                    window.originalTableHtml = tableBody.innerHTML;
                 }
-            })
-            .catch(error => console.error('Error:', error));
+                tableBody.innerHTML = window.originalTableHtml;
+                if (recordCount) {
+                    recordCount.textContent = `Всего записей: ${document.querySelectorAll('#viewTableBody tr').length}`;
+                }
+            }
         });
 
         // Обработка клика на "Редактировать"
@@ -533,6 +535,7 @@ try {
             });
         });
     </script>
+
 </body>
 </html>
 ```
