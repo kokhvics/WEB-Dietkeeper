@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: adminpanel.php');
             exit;
         } else {
-            $error = 'Неверный логин или пароль';
+            $error = 'Не удалось войти. Пожалуйста, проверьте, что вы ввели правильное имя пользователя и пароль.';
         }
     } catch (Exception $e) {
         $error = 'Ошибка: ' . $e->getMessage();
@@ -74,51 +74,28 @@ if (isset($config['github'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход в админ-панель</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .btn-github {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 30px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        .btn-github:hover {
-            background-color: #555;
-            color: white;
-        }
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            color: #6c757d;
-            position: relative;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .login-form {
-            width: 30%;
-            min-width: 300px;
-        }
-        </style>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
     <div class="login-container">
         <div class="login-form">
             <h2 class="text-center mb-4">Вход в админ-панель</h2>
             <?php if (isset($error)): ?>
-                <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+                <div class="alert alert-warning d-flex align-items-start">
+                    <i class="bi bi-exclamation-triangle-fill me-2 mt-1" style="font-size: 1.2rem; color: #856404;"></i>
+                    <div>
+                        <?php echo htmlspecialchars($error); ?><br>
+                        <small class="text-muted">
+                            Если вы забыли пароль, напишите администратору или воспользуйтесь 
+                            <a href="#" class="text-decoration-underline" onclick="alert('Функция восстановления пароля пока недоступна. Обратитесь к администратору.'); return false;">
+                                восстановлением пароля
+                            </a>.
+                        </small>
+                    </div>
+                </div>
             <?php endif; ?>
             <form action="login.php" method="POST">
                 <div class="mb-3">
@@ -129,11 +106,11 @@ if (isset($config['github'])) {
                     <label for="password" class="form-label">Пароль</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Войти</button>
+                <button type="submit" class="btn w-100">Войти</button>
             </form>
 
             <?php if ($github_enabled): ?>
-            <div class="divider">
+            <div class="text-field">
                 <span>или войти через</span>
             </div>
 

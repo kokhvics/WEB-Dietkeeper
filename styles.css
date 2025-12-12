@@ -153,3 +153,8 @@ header.sticky-top {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.form-control:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(154, 205, 50, 0.25) !important; /* #9ACD32 с прозрачностью */
+}

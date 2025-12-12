@@ -1,0 +1,36 @@
+.btn-github {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+.btn-github:hover {
+    background-color: #555;
+    color: white;
+}
+.text-field {
+    text-align: center;
+    margin: 20px 0;
+    color: #6c757d;
+    background-color: #F8F9FA;
+    position: relative;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.login-form {
+    width: 30%;
+    min-width: 300px;
+}
