@@ -44,7 +44,7 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="STYLE/admin.css">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="STYLE/styles.css">
 </head>
 <body>
     <header class="bg-light sticky-top">
@@ -113,7 +113,7 @@ try {
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <button class="btn">Редактировать</button>
+                                            <button class="btn edit-btn">Редактировать</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
