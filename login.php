@@ -5,7 +5,7 @@ require_once 'config.php'; // Подключаем конфигурационн�
 
 // Проверка, авторизован ли пользователь
 if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
-    header('Location: adminpanel.php');
+    header('Location: admin_view.php');
     exit;
 }
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && $user['decrypted_password'] === $password) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            header('Location: adminpanel.php');
+            header('Location: admin_view.php');
             exit;
         } else {
             $error = 'Не удалось войти. Пожалуйста, проверьте, что вы ввели правильное имя пользователя и пароль.';
