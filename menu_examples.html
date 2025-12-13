@@ -70,7 +70,22 @@
 
     <!-- Основной контент -->
     <div class="container py-5">
-        <h3 class="text-center mb-4">Готовые планы питания на 1500, 1700 и 2000 калорий</h3>
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <h3 class="text-center">Готовые планы питания на 1500, 1700 и 2000 калорий</h3>
+                <!-- Информационная иконка с тултипом -->
+                <button type="button"
+                        class="btn-icon-circle"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="left"
+                        data-bs-html="true"
+                        title="
+                            Важно!Представленные меню носят ознакомительный характер и разработаны как пример сбалансированного питания на определённое количество калорий (1500 / 1700 / 2000 ккал). Вы можете свободно заменять продукты на аналоги с похожей калорийностью и составом КБЖУ — например, куриную грудку на индейку, гречку на киноа или яблоко на грушу.Главное — сохраняйте общий баланс белков, жиров, углеводов и калорий под ваши цели: похудение, поддержание веса или набор массы.
+                        ">
+                    <i class="bi bi-info-circle"></i>
+                </button>
+            </div>
+        </div>
 
         <!-- Кнопки выбора калорийности -->
         <div class="calorie-buttons">
@@ -115,6 +130,11 @@
             if (menu && !menu.contains(e.target) && e.target !== button) {
                 menu.classList.add('d-none');
             }
+        });
+            // Активация всех тултипов на странице
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, { trigger: 'hover' });
         });
     </script>
 </body>

@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+$categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные продукты', 'Рыба и морепродукты', 'Грибы', 'Напитки', 'Молочные продукты','Сладости', 'Другое'];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -38,6 +39,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="STYLE/admin.css">
     <link rel="stylesheet" href="STYLE/styles.css">
+    <style>
+        .required-icon {
+            color: #dc3545;
+            cursor: help;
+            font-size: 0.8em;
+            margin-left: 0.25rem;
+            vertical-align: middle;
+        }
+        .required-tooltip:hover::after {
+            content: "Поле обязательно к заполнению";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            z-index: 1000;
+            margin-bottom: 0.25rem;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
     <header class="bg-light sticky-top">
@@ -71,57 +99,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="col-md-10">
                 <h2 class="mb-4">Создание нового продукта</h2>
-                <form id="createForm">
+                <form id="createForm" novalidate>
                     <div class="mb-3">
-                        <label for="createName" class="form-label">Название</label>
-                            <input type="text" class="form-control" id="createName" name="name"
-                            title="От 1 до 100 символов, буквы, цифры, пробелы и знаки препинания"
-                            pattern=".{1,100}" maxlength="100" required>
-                        <div class="form-text text-muted">До 100 символов</div>
+                        <label class="form-label">Название <span class="required-icon required-tooltip">!</span></label>
+                        <input type="text" class="form-control" id="createName" name="name"
+                            title="От 2 до 100 символов" maxlength="100" required>
+                        <div class="form-text text-muted">От 2 до 100 символов</div>
                     </div>
+                    
                     <div class="mb-3">
-                        <label for="createCategory" class="form-label">Категория</label>
+                        <label class="form-label">Категория <span class="required-icon required-tooltip">!</span></label>
                         <select class="form-select" id="createCategory" name="category" required>
                             <option value="">Выберите категорию</option>
-                            <option value="Овощи">Овощи</option>
-                            <option value="Фрукты">Фрукты</option>
-                            <option value="Крупы">Крупы</option>
-                            <option value="Мясные продукты">Мясные продукты</option>
-                            <option value="Рыба и морепродукты">Рыба и морепродукты</option>
-                            <option value="Грибы">Грибы</option>
-                            <option value="Напитки">Напитки</option>
-                            <option value="Молочные продукты">Молочные продукты</option>
-                            <option value="Сладости">Сладости</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?= htmlspecialchars($cat) ?>"><?= htmlspecialchars($cat) ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
+
                     <div class="mb-3">
-                        <label for="createProtein" class="form-label">Белки (г)</label>
-                        <input type="number" step="0.01" min="0" max="1000" class="form-control" id="createProtein" name="protein"
-                            title="Число от 0 до 1000, до двух знаков после запятой" required>
-                        <div class="form-text text-muted">Только цифры, например: 12.5</div>
+                        <label class="form-label">Белки (г) <span class="required-icon required-tooltip">!</span></label>
+                        <input type="text" class="form-control" id="createProtein" name="protein" required>
+                        <div class="form-text text-muted">0-100, один десятичный знак</div>
                     </div>
                     <div class="mb-3">
-                        <label for="createFat" class="form-label">Жиры (г)</label>
-                        <input type="number" step="0.01" class="form-control" id="createFat" name="fat" required>
-                        <div class="form-text text-muted">Только цифры, например: 12.5</div>
+                        <label class="form-label">Жиры (г) <span class="required-icon required-tooltip">!</span></label>
+                        <input type="text" class="form-control" id="createFat" name="fat" required>
+                        <div class="form-text text-muted">0-100, один десятичный знак</div>
                     </div>
                     <div class="mb-3">
-                        <label for="createCarbs" class="form-label">Углеводы (г)</label>
-                        <input type="number" step="0.01" class="form-control" id="createCarbs" name="carbs" required>
-                        <div class="form-text text-muted">Только цифры, например: 12.5</div>
+                        <label class="form-label">Углеводы (г) <span class="required-icon required-tooltip">!</span></label>
+                        <input type="text" class="form-control" id="createCarbs" name="carbs" required>
+                        <div class="form-text text-muted">0-100, один десятичный знак</div>
                     </div>
+
                     <div class="mb-3">
-                        <label for="createCalories" class="form-label">Калории (ккал)</label>
-                        <input type="number" step="1" min="0" max="5000" class="form-control" id="createCalories" name="calories"
-                            title="Целое число от 0 до 5000" required>
-                        <div class="form-text text-muted">Только целые числа</div>
+                        <label class="form-label">Калории (ккал) <span class="required-icon required-tooltip">!</span></label>
+                        <input type="text" class="form-control" id="createCalories" name="calories" required>
+                        <div class="form-text text-muted">Целое число 0-1000</div>
                     </div>
+                    
                     <div class="mb-3">
-                        <label for="createImageUrl" class="form-label">URL изображения</label>
-                         <input type="url" class="form-control" id="createImageUrl" name="image_url"
-                                title="Полный URL, начинается с http:// или https://">
+                        <label class="form-label">URL изображения</label>
+                        <input type="text" class="form-control" id="createImageUrl" name="image_url">
+                        <div class="form-text text-muted">jpg, png, webp (опционально)</div>
                     </div>
-                    <button type="submit" class="btn btn-success">Создать продукт</button>
+                    
+                    <button type="submit" class="btn btn-success" id="submitBtn">Создать продукт</button>
                 </form>
             </div>
         </div>
@@ -129,31 +153,159 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Проверка дубликатов — выполняется при потере фокуса с поля "Название"
+        const categories = <?= json_encode($categories) ?>;
+
+        // Универсальная функция валидации текстового поля (БЕЗ визуальных ошибок)
+        function validateTextField(value, minLength, maxLength, fieldName) {
+            const trimmed = value.trim();
+            
+            if (!trimmed) return false;
+            if (trimmed.length < minLength) return false;
+            if (trimmed.length > maxLength) return false;
+            
+            return true;
+        }
+
+        function validateName(value) {
+            return validateTextField(value, 2, 100, 'Название');
+        }
+
+        function validateCategory(value) {
+            return value && categories.includes(value);
+        }
+
+        function validateNutrientField(value, inputEl, fieldName) {
+            // БЛОКИРОВКА БУКВ - только цифры, точка, запятая
+            const numericValue = value.replace(/[^0-9.,]/g, '');
+            if (numericValue !== value) {
+                inputEl.value = numericValue;
+            }
+            
+            return validateTextField(numericValue, 1, 6, fieldName);
+        }
+
+        function validateCaloriesField(value, inputEl) {
+            // БЛОКИРОВКА БУКВ - только цифры
+            const numericValue = value.replace(/[^0-9]/g, '');
+            if (numericValue !== value) {
+                inputEl.value = numericValue;
+            }
+            
+            const num = parseInt(numericValue);
+            return !isNaN(num) && num >= 0 && num <= 1000;
+        }
+
+        function validateImageUrl(value) {
+            if (!value.trim()) return true;
+            return /^https?:\/\//i.test(value);
+        }
+
+        function isFormValid() {
+            const nameValid = validateName(document.getElementById('createName').value);
+            const categoryValid = validateCategory(document.getElementById('createCategory').value);
+            
+            const proteinValid = validateNutrientField(
+                document.getElementById('createProtein').value, 
+                document.getElementById('createProtein'),
+                'Белки'
+            );
+            const fatValid = validateNutrientField(
+                document.getElementById('createFat').value, 
+                document.getElementById('createFat'),
+                'Жиры'
+            );
+            const carbsValid = validateNutrientField(
+                document.getElementById('createCarbs').value, 
+                document.getElementById('createCarbs'),
+                'Углеводы'
+            );
+            
+            const caloriesValid = validateCaloriesField(
+                document.getElementById('createCalories').value,
+                document.getElementById('createCalories')
+            );
+            const imageUrlValid = validateImageUrl(document.getElementById('createImageUrl').value);
+
+            return nameValid && categoryValid && proteinValid && fatValid && carbsValid && 
+                   caloriesValid && imageUrlValid;
+        }
+
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            if (isFormValid()) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-secondary');
+                submitBtn.classList.add('btn-success');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.remove('btn-success');
+                submitBtn.classList.add('btn-secondary');
+            }
+        }
+
+        // Инициализация динамической валидации (БЕЗ подсветки)
+        function initRealTimeValidation() {
+            // Название
+            document.getElementById('createName').addEventListener('input', function() {
+                updateSubmitButton();
+            });
+
+            // Категория
+            document.getElementById('createCategory').addEventListener('change', function() {
+                updateSubmitButton();
+            });
+
+            // БЖУ - БЛОКИРОВКА БУКВ
+            ['createProtein', 'createFat', 'createCarbs'].forEach((id, index) => {
+                const input = document.getElementById(id);
+                const fieldNames = ['Белки', 'Жиры', 'Углеводы'];
+                
+                input.addEventListener('input', function() {
+                    validateNutrientField(this.value, this, fieldNames[index]);
+                    updateSubmitButton();
+                });
+            });
+
+            // Калории - БЛОКИРОВКА БУКВ
+            document.getElementById('createCalories').addEventListener('input', function() {
+                validateCaloriesField(this.value, this);
+                updateSubmitButton();
+            });
+
+            // URL изображения
+            document.getElementById('createImageUrl').addEventListener('input', function() {
+                updateSubmitButton();
+            });
+        }
+
+        // Проверка дубликатов названия
         document.getElementById('createName').addEventListener('blur', async function() {
             const name = this.value.trim();
-            if (name.length < 1) return;
-            const res = await fetch(`search.php?query=${encodeURIComponent(name)}`);
-            const products = await res.json();
-            if (products.some(p => p.name.toLowerCase() === name.toLowerCase())) {
-                this.setCustomValidity('Продукт с таким названием уже существует');
-                this.reportValidity();
-            } else {
-                this.setCustomValidity('');
+            if (name.length < 2) return;
+            
+            try {
+                const res = await fetch(`search.php?query=${encodeURIComponent(name)}`);
+                const products = await res.json();
+                if (products.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+                    alert('Продукт с таким названием уже существует');
+                    this.value = '';
+                    updateSubmitButton();
+                }
+            } catch (err) {
+                console.error('Ошибка проверки дубликатов:', err);
             }
         });
 
         // Отправка формы
         document.getElementById('createForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            // Дополнительная проверка перед отправкой
-            if (!this.checkValidity()) {
+
+            if (!isFormValid()) {
+                alert('Исправьте ошибки в форме');
                 return;
             }
 
-            // Показать загрузку
-            const btn = document.getElementById('createSubmitBtn');
+            const btn = document.getElementById('submitBtn');
             const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Создание...';
@@ -163,9 +315,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const res = await fetch('admin_create.php', { method: 'POST', body: formData });
                 const data = await res.json();
                 if (data.success) {
-                    // Визуальное уведомление (Toast или alert)
                     alert('✅ Продукт создан!');
                     this.reset();
+                    updateSubmitButton();
                 } else {
                     alert('❌ Ошибка: ' + (data.message || 'Неизвестная ошибка'));
                 }
@@ -175,6 +327,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
             }
+        });
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            initRealTimeValidation();
+            updateSubmitButton();
         });
     </script>
 </body>
