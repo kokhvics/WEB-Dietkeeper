@@ -116,10 +116,6 @@
                         echo '</a>';
                     }
                     ?>
-                    <!-- Кнопка "Показать еще" -->
-                    <a href="menu_examples.html" class="btn btn-success w-100 d-md-none mt-3">
-                        Показать еще <i class="bi bi-arrow-right"></i>
-                    </a>
                 </div>
             </div>
             <div class="col-md-9">

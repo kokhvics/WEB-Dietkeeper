@@ -63,32 +63,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="STYLE/admin.css">
     <link rel="stylesheet" href="STYLE/styles.css">
-    <style>
-        .error-message {
-            display: none;
-            color: #dc3545;
-            font-size: 0.875em;
-            margin-top: 0.25rem;
-        }
-        .error-message.show {
-            display: block;
-        }
-        .form-control.is-invalid {
-            border-color: #dc3545;
-            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-        }
-        .sum-info {
-            font-size: 0.875em;
-            margin-top: 0.25rem;
-            font-weight: 500;
-        }
-        .sum-warning {
-            color: #ffc107;
-        }
-        .sum-error {
-            color: #dc3545;
-        }
-    </style>
 </head>
 <body>
     <header class="bg-light sticky-top">

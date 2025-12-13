@@ -103,30 +103,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="STYLE/admin.css">
     <link rel="stylesheet" href="STYLE/styles.css">
-    <style>
-        .required-icon {
-            color: #dc3545;
-            cursor: help;
-            font-size: 0.8em;
-            margin-left: 0.25rem;
-            vertical-align: middle;
-        }
-        .btn:disabled {
-            opacity: 0.6;
-        }
-        .csv-section {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #dee2e6;
-        }
-        .csv-help {
-            font-size: 0.875em;
-            color: #6c757d;
-        }
-        .csv-result {
-            margin-top: 1rem;
-        }
-    </style>
 </head>
 <body>
     <header class="bg-light sticky-top">
@@ -164,12 +140,12 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                 <!-- Форма создания одного продукта -->
                 <form id="createForm" novalidate>
                     <div class="mb-3">
-                        <label class="form-label">Название <span class="required-icon">!</span></label>
+                        <label class="form-label">Название <span class="required-icon" data-bs-toggle="tooltip" data-bs-title="Обязательное поле" style="cursor: help;">!</span></label>
                         <input type="text" class="form-control" id="createName" name="name" maxlength="100" required>
                         <div class="form-text text-muted">От 2 до 100 символов</div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Категория <span class="required-icon">!</span></label>
+                        <label class="form-label">Категория <span class="required-icon" data-bs-toggle="tooltip" data-bs-title="Обязательное поле" style="cursor: help;">!</span></label>
                         <select class="form-select" id="createCategory" name="category" required>
                             <option value="">Выберите категорию</option>
                             <?php foreach ($categories as $cat): ?>
@@ -178,22 +154,22 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Белки (г) <span class="required-icon">!</span></label>
+                        <label class="form-label">Белки (г) <span class="required-icon" data-bs-toggle="tooltip" data-bs-title="Обязательное поле" style="cursor: help;">!</span></label>
                         <input type="text" class="form-control" id="createProtein" name="protein" required>
                         <div class="form-text text-muted">0–100, один знак после запятой</div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Жиры (г) <span class="required-icon">!</span></label>
+                        <label class="form-label">Жиры (г) <span class="required-icon" data-bs-toggle="tooltip" data-bs-title="Обязательное поле" style="cursor: help;">!</span></label>
                         <input type="text" class="form-control" id="createFat" name="fat" required>
                         <div class="form-text text-muted">0–100, один знак после запятой</div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Углеводы (г) <span class="required-icon">!</span></label>
+                        <label class="form-label">Углеводы (г) <span class="required-icon" data-bs-toggle="tooltip" data-bs-title="Обязательное поле" style="cursor: help;">!</span></label>
                         <input type="text" class="form-control" id="createCarbs" name="carbs" required>
                         <div class="form-text text-muted">0–100, один знак после запятой</div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Калории (ккал) <span class="required-icon">!</span></label>
+                        <label class="form-label">Калории (ккал) <span class="required-icon" data-bs-toggle="tooltip" data-bs-title="Обязательное поле" style="cursor: help;">!</span></label>
                         <input type="text" class="form-control" id="createCalories" name="calories" required>
                         <div class="form-text text-muted">Целое число 0–1000</div>
                     </div>
@@ -363,6 +339,14 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
         // Инициализация
         document.addEventListener('DOMContentLoaded', () => {
             updateSubmitButton();
+        });
+        // Активация всех тултипов на странице
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                placement: 'top',
+                trigger: 'hover'
+            });
         });
     </script>
 </body>
