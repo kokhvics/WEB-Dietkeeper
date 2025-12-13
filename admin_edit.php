@@ -21,18 +21,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     }
 }
 
-// Обработка обновления
+// Обработка обновления - ✅ ИСПРАВЛЕНО: правильная обработка запятых
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json; charset=utf-8');
     try {
+        // ✅ Заменяем запятые на точки для БД
+        $protein = str_replace(',', '.', $_POST['protein']);
+        $fat = str_replace(',', '.', $_POST['fat']);
+        $carbs = str_replace(',', '.', $_POST['carbs']);
+        $calories = str_replace(',', '.', $_POST['calories']);
+        
         updateProduct(
             $_POST['id'],
             $_POST['name'],
             $_POST['category'],
-            $_POST['protein'],
-            $_POST['fat'],
-            $_POST['carbs'],
-            $_POST['calories'],
+            $protein,
+            $fat,
+            $carbs,
+            $calories,
             $_POST['image_url']
         );
         echo json_encode(['success' => true, 'message' => 'Продукт обновлён']);
@@ -51,7 +57,7 @@ try {
 }
 
 // Предустановленный список категорий
-$categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные продукты', 'Рыба и морепродукты', 'Грибы', 'Напитки', 'Молочные продукты', 'Сладости','Орехи и семена', 'Другое'];
+$categories = ['Овощи', 'Фрукты', 'Хлебобулочные изделия', 'Крупы', 'Мясные продукты', 'Рыба и морепродукты', 'Грибы', 'Напитки', 'Молочные продукты', 'Сладости','Орехи и семена', 'Другое'];
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -63,6 +69,10 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="STYLE/admin.css">
     <link rel="stylesheet" href="STYLE/styles.css">
+    <style>
+        .error-message { color: #dc3545; font-size: 0.875em; margin-top: 0.25rem; display: none; }
+        .error-message.show { display: block; }
+    </style>
 </head>
 <body>
     <header class="bg-light sticky-top">
@@ -181,26 +191,26 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                             <label>Белки (г)</label>
                             <input type="text" class="form-control" id="editProtein" name="protein" required>
                             <div class="error-message" id="proteinError"></div>
-                            <div class="form-text text-muted">0-100, один десятичный знак</div>
+                            <div class="form-text text-muted">0-100, доп. знаки</div>
                         </div>
                         <div class="mb-3">
                             <label>Жиры (г)</label>
                             <input type="text" class="form-control" id="editFat" name="fat" required>
                             <div class="error-message" id="fatError"></div>
-                            <div class="form-text text-muted">0-100, один десятичный знак</div>
+                            <div class="form-text text-muted">0-100, доп. знаки</div>
                         </div>
                         <div class="mb-3">
                             <label>Углеводы (г)</label>
                             <input type="text" class="form-control" id="editCarbs" name="carbs" required>
                             <div class="error-message" id="carbsError"></div>
-                            <div class="form-text text-muted">0-100, один десятичный знак</div>
+                            <div class="form-text text-muted">0-100, доп. знаки</div>
                         </div>
 
                         <div class="mb-3">
                             <label>Калории (ккал)</label>
                             <input type="text" class="form-control" id="editCalories" name="calories" required>
                             <div class="error-message" id="caloriesError"></div>
-                            <div class="form-text text-muted">Целое число 0-1000</div>
+                            <div class="form-text text-muted">0-1000</div>
                         </div>
                         
                         <div class="mb-3">
@@ -210,7 +220,7 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                             <div class="form-text text-muted">url (опционально)</div>
                         </div>
                         
-                        <button type="submit" class="btn" id="submitBtn">Сохранить</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Сохранить</button>
                     </form>
                 </div>
             </div>
@@ -221,6 +231,15 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
     <script>
         let originalData = null;
         const categories = <?= json_encode($categories) ?>;
+
+        // ✅ НОВЫЕ ФУНКЦИИ ВАЛИДАЦИИ - правильно обрабатывают 678.00
+        function normalizeNumber(value) {
+            // Только цифры, одна точка/запятая
+            let normalized = value.replace(/[^0-9.,]/g, '');
+            // Запятая → точка, только одна
+            normalized = normalized.replace(/,/g, '.').replace(/(\..*)\./g, '$1');
+            return normalized;
+        }
 
         // Поиск как на странице просмотра
         const searchInput = document.getElementById('search-input');
@@ -262,7 +281,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                             tableBody.innerHTML = '<tr><td colspan="9" class="text-center text-muted">Ничего не найдено</td></tr>';
                             document.getElementById('record-count').textContent = 'Всего записей: 0';
                         }
-                        // Перепривязка обработчиков кнопок редактирования
                         initEditButtons();
                     })
                     .catch(err => {
@@ -272,30 +290,70 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
             } else {
                 tableBody.innerHTML = originalHtml;
                 document.getElementById('record-count').textContent = `Всего записей: ${originalCount}`;
-                // Перепривязка обработчиков кнопок редактирования
                 initEditButtons();
             }
         });
 
-        // Функции валидации
+        function showFieldError(inputEl, errorEl, message) {
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+            inputEl.classList.add('is-invalid');
+        }
+
+        function hideFieldError(inputEl, errorEl) {
+            errorEl.classList.remove('show');
+            inputEl.classList.remove('is-invalid');
+        }
+
+        // ✅ ИСПРАВЛЕННАЯ валидация калорий и нутриентов
+        function validateCaloriesField(value) {
+            const errorEl = document.getElementById('caloriesError');
+            const inputEl = document.getElementById('editCalories');
+            
+            const numericValue = normalizeNumber(value);
+            if (numericValue !== value) {
+                inputEl.value = numericValue;
+            }
+            
+            const num = parseFloat(numericValue);
+            if (isNaN(num) || num < 0 || num > 1000) {
+                showFieldError(inputEl, errorEl, '0-1000 (678.00 ✅)');
+                return false;
+            }
+            hideFieldError(inputEl, errorEl);
+            return true;
+        }
+
+        function validateNutrientField(value, errorEl, inputEl, fieldName) {
+            const numericValue = normalizeNumber(value);
+            if (numericValue !== value) {
+                inputEl.value = numericValue;
+            }
+            
+            const num = parseFloat(numericValue);
+            if (isNaN(num) || num < 0 || num > 100) {
+                showFieldError(inputEl, errorEl, `${fieldName}: 0-100`);
+                return false;
+            }
+            hideFieldError(inputEl, errorEl);
+            return true;
+        }
+
+        // Остальные функции валидации БЕЗ ИЗМЕНЕНИЙ
         function validateTextField(value, minLength, maxLength, errorEl, inputEl, fieldName) {
             const trimmed = value.trim();
-            
             if (!trimmed) {
                 showFieldError(inputEl, errorEl, `${fieldName} обязательно`);
                 return false;
             }
-            
             if (trimmed.length < minLength) {
                 showFieldError(inputEl, errorEl, `Минимум ${minLength} символа`);
                 return false;
             }
-            
             if (trimmed.length > maxLength) {
                 showFieldError(inputEl, errorEl, `Максимум ${maxLength} символов`);
                 return false;
             }
-            
             hideFieldError(inputEl, errorEl);
             return true;
         }
@@ -309,7 +367,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
         function validateCategory(value) {
             const errorEl = document.getElementById('categoryError');
             const inputEl = document.getElementById('editCategory');
-            
             if (!value || !categories.includes(value)) {
                 showFieldError(inputEl, errorEl, 'Выберите из списка');
                 return false;
@@ -318,62 +375,19 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
             return true;
         }
 
-        function validateNutrientField(value, errorEl, inputEl, fieldName) {
-            // БЛОКИРОВКА БУКВ - только цифры, точка, запятая
-            const numericValue = value.replace(/[^0-9.,]/g, '');
-            if (numericValue !== value) {
-                inputEl.value = numericValue;
-            }
-            return validateTextField(numericValue, 1, 6, errorEl, inputEl, fieldName);
-        }
-
-        function validateCaloriesField(value) {
-            const errorEl = document.getElementById('caloriesError');
-            const inputEl = document.getElementById('editCalories');
-            
-            // БЛОКИРОВКА БУКВ - только цифры
-            const numericValue = value.replace(/[^0-9]/g, '');
-            if (numericValue !== value) {
-                inputEl.value = numericValue;
-            }
-            
-            const num = parseInt(numericValue);
-            if (isNaN(num) || num < 0 || num > 1000) {
-                showFieldError(inputEl, errorEl, 'Целое число 0-1000');
-                return false;
-            }
-            
-            hideFieldError(inputEl, errorEl);
-            return true;
-        }
-
         function validateImageUrl(value) {
             const errorEl = document.getElementById('imageUrlError');
             const inputEl = document.getElementById('editImageUrl');
-            
             if (!value.trim()) {
                 hideFieldError(inputEl, errorEl);
                 return true;
             }
-            
             if (!/^https?:\/\//i.test(value)) {
                 showFieldError(inputEl, errorEl, 'Некорректный URL');
                 return false;
             }
-            
             hideFieldError(inputEl, errorEl);
             return true;
-        }
-
-        function showFieldError(inputEl, errorEl, message) {
-            errorEl.textContent = message;
-            errorEl.classList.add('show');
-            inputEl.classList.add('is-invalid');
-        }
-
-        function hideFieldError(inputEl, errorEl) {
-            errorEl.classList.remove('show');
-            inputEl.classList.remove('is-invalid');
         }
 
         function isFormValid() {
