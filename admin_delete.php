@@ -113,16 +113,9 @@ try {
                         <table class="table table-striped">
                             <thead class="table-header-green">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Название</th>
-                                    <th>Категория</th>
-                                    <th>Б</th>
-                                    <th>Ж</th>
-                                    <th>У</th>
-                                    <th>Ккал</th>
-                                    <th>Изображение</th>
-                                    <th>Действия</th>
-                                </tr>
+                            <tr>
+                                <th>ID</th><th>Название</th><th>Категория</th><th>Белки</th><th>Жиры</th><th>Углеводы</th><th>Калории</th><th>Изображение</th><th>Действие</th>
+                            </tr>
                             </thead>
                             <tbody id="table-body">
                                 <?php foreach ($products as $p): ?>

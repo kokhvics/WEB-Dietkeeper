@@ -96,8 +96,9 @@
                     'Мясные продукты' => 'fas fa-drumstick-bite',
                     'Рыба и морепродукты' => 'fas fa-fish',
                     'Грибы' => 'fas fa-leaf',
-                    'Напитки' => 'fas fa-glass-water'
-                ];
+                    'Напитки' => 'fas fa-glass-water',
+                    'Орехи и семена' => 'fas fa-seedling',
+                    ];
                     
                     $selectedCategory = isset($_GET['category']) ? $_GET['category'] : '';
                     $isAllSelected = empty($selectedCategory);
