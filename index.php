@@ -168,7 +168,7 @@
                                 echo '            <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>';
                                 echo '            <div class="nutrients">';
                                 echo '                <small class="text-muted nutrients-info">';
-                                echo '                    <span data-bs-toggle="tooltip" data-bs-title="Калории">Б</span>:   ' . formatNutrient($product['calories']) . 'ккал | ';
+                                echo '                    <span data-bs-toggle="tooltip" data-bs-title="Калории">К</span>:   ' . formatNutrient($product['calories']) . 'ккал | ';
                                 echo '                    <span data-bs-toggle="tooltip" data-bs-title="Белки">Б</span>: ' . formatNutrient($product['protein']) . 'г | ';
                                 echo '                    <span data-bs-toggle="tooltip" data-bs-title="Жиры">Ж</span>: ' . formatNutrient($product['fat']) . 'г | ';
                                 echo '                    <span data-bs-toggle="tooltip" data-bs-title="Углеводы">У</span>: ' . formatNutrient($product['carbs']) . 'г';

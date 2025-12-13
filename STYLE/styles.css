@@ -164,3 +164,14 @@ header.sticky-top {
     border-color: var(--primary-color) !important;
     box-shadow: 0 0 0 0.25rem rgba(154, 205, 50, 0.25) !important; /* #9ACD32 с прозрачностью */
 }
+/* Подсказки для Б/Ж/У */
+.nutrients-info span[data-bs-toggle="tooltip"] {
+    border-bottom: 1px dashed #9ACD32;
+    cursor: help;
+    font-weight: 500;
+}
+.nutrients small {
+    font-size: 0.95rem !important; /* или 1rem, если хотите ещё крупнее */
+    font-weight: 500;
+    color: #495057;
+}

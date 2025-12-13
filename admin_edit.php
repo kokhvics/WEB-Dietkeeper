@@ -195,8 +195,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                             <div class="error-message" id="carbsError"></div>
                             <div class="form-text text-muted">0-100, один десятичный знак</div>
                         </div>
-                        
-                        <div class="sum-info" id="nutrientsSum">Сумма Б+Ж+У: 0 г</div>
 
                         <div class="mb-3">
                             <label>Калории (ккал)</label>
@@ -209,7 +207,7 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                             <label>URL изображения</label>
                             <input type="text" class="form-control" id="editImageUrl" name="image_url">
                             <div class="error-message" id="imageUrlError"></div>
-                            <div class="form-text text-muted">jpg, png, webp (опционально)</div>
+                            <div class="form-text text-muted">url (опционально)</div>
                         </div>
                         
                         <button type="submit" class="btn" id="submitBtn">Сохранить</button>
@@ -279,7 +277,7 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
             }
         });
 
-        // Функции валидации (все как было)
+        // Функции валидации
         function validateTextField(value, minLength, maxLength, errorEl, inputEl, fieldName) {
             const trimmed = value.trim();
             
@@ -321,21 +319,27 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
         }
 
         function validateNutrientField(value, errorEl, inputEl, fieldName) {
-            return validateTextField(value, 1, 6, errorEl, inputEl, fieldName);
+            // БЛОКИРОВКА БУКВ - только цифры, точка, запятая
+            const numericValue = value.replace(/[^0-9.,]/g, '');
+            if (numericValue !== value) {
+                inputEl.value = numericValue;
+            }
+            return validateTextField(numericValue, 1, 6, errorEl, inputEl, fieldName);
         }
 
         function validateCaloriesField(value) {
             const errorEl = document.getElementById('caloriesError');
             const inputEl = document.getElementById('editCalories');
             
-            if (!value.trim()) {
-                showFieldError(inputEl, errorEl, 'Калории обязательны');
-                return false;
+            // БЛОКИРОВКА БУКВ - только цифры
+            const numericValue = value.replace(/[^0-9]/g, '');
+            if (numericValue !== value) {
+                inputEl.value = numericValue;
             }
             
-            const num = parseFloat(value.replace(',', '.'));
-            if (isNaN(num) || num < 0) {
-                showFieldError(inputEl, errorEl, 'Введите положительное число');
+            const num = parseInt(numericValue);
+            if (isNaN(num) || num < 0 || num > 1000) {
+                showFieldError(inputEl, errorEl, 'Целое число 0-1000');
                 return false;
             }
             
@@ -352,6 +356,11 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                 return true;
             }
             
+            if (!/^https?:\/\//i.test(value)) {
+                showFieldError(inputEl, errorEl, 'Некорректный URL');
+                return false;
+            }
+            
             hideFieldError(inputEl, errorEl);
             return true;
         }
@@ -365,17 +374,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
         function hideFieldError(inputEl, errorEl) {
             errorEl.classList.remove('show');
             inputEl.classList.remove('is-invalid');
-        }
-
-        function updateNutrientsSum() {
-            const protein = parseFloat(document.getElementById('editProtein').value.replace(',', '.')) || 0;
-            const fat = parseFloat(document.getElementById('editFat').value.replace(',', '.')) || 0;
-            const carbs = parseFloat(document.getElementById('editCarbs').value.replace(',', '.')) || 0;
-            const sum = protein + fat + carbs;
-            const sumEl = document.getElementById('nutrientsSum');
-            
-            sumEl.textContent = `Сумма Б+Ж+У: ${sum.toFixed(1)} г`;
-            sumEl.className = 'sum-info' + (sum > 100 ? ' sum-error' : sum > 95 ? ' sum-warning' : '');
         }
 
         function isFormValid() {
@@ -401,16 +399,11 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                 'Углеводы'
             );
             
-            const protein = parseFloat(document.getElementById('editProtein').value.replace(',', '.')) || 0;
-            const fat = parseFloat(document.getElementById('editFat').value.replace(',', '.')) || 0;
-            const carbs = parseFloat(document.getElementById('editCarbs').value.replace(',', '.')) || 0;
-            const sumValid = (protein + fat + carbs) <= 100;
-            
             const caloriesValid = validateCaloriesField(document.getElementById('editCalories').value);
             const imageUrlValid = validateImageUrl(document.getElementById('editImageUrl').value);
 
             return nameValid && categoryValid && proteinValid && fatValid && carbsValid && 
-                   caloriesValid && imageUrlValid && sumValid;
+                   caloriesValid && imageUrlValid;
         }
 
         function updateSubmitButton() {
@@ -444,7 +437,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                 
                 input.addEventListener('input', function() {
                     validateNutrientField(this.value, document.getElementById(errorId), this, fieldNames[index]);
-                    updateNutrientsSum();
                     updateSubmitButton();
                 });
             });
@@ -486,8 +478,6 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
 
                     document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
                     document.querySelectorAll('.form-control').forEach(el => el.classList.remove('is-invalid'));
-                    document.getElementById('nutrientsSum').className = 'sum-info';
-                    updateNutrientsSum();
                     updateSubmitButton();
 
                     const modal = new bootstrap.Modal(document.getElementById('editModal'));

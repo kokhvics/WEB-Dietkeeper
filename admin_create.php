@@ -176,7 +176,7 @@ $categories = ['Овощи', 'Фрукты', 'Крупы', 'Мясные про�
                     <div class="mb-3">
                         <label class="form-label">URL изображения</label>
                         <input type="text" class="form-control" id="createImageUrl" name="image_url">
-                        <div class="form-text text-muted">jpg, png, webp (опционально)</div>
+                        <div class="form-text text-muted">url (опционально)</div>
                     </div>
                     <button type="submit" class="btn btn-success" id="submitBtn">Создать продукт</button>
                 </form>

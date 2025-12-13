@@ -89,10 +89,7 @@ if (isset($config['github'])) {
                     <div>
                         <?php echo htmlspecialchars($error); ?><br>
                         <small class="text-muted">
-                            Если вы забыли пароль, напишите администратору или воспользуйтесь 
-                            <a href="#" class="text-decoration-underline" onclick="alert('Функция восстановления пароля пока недоступна. Обратитесь к администратору.'); return false;">
-                                восстановлением пароля
-                            </a>.
+                            Если вы забыли пароль, напишите администратору koheskine@yandex.ru
                         </small>
                     </div>
                 </div>
