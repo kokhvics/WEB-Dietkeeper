@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помощь — DietKeeper</title>
+    <!-- Подключение Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="STYLE/styles.css">
+    <link rel="stylesheet" href="STYLE/help.css">
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="bg-light sticky-top position-relative">
+        <div class="container d-flex justify-content-between align-items-center py-2">
+            <!-- Логотип -->
+            <a href="index.php" class="navbar-brand text-decoration-none text-dark">
+                <img src="SVG/logo.svg" alt="DietKeeper Logo" width="30" height="30" class="d-inline-block align-text-top">
+                <span class="site-title">DietKeeper</span>
+            </a>
+
+            <!-- Навигация -->
+            <div class="d-flex gap-2 align-items-center">
+                <div class="d-none d-md-flex gap-2">
+                    <a href="menu_examples.html" class="btn">
+                        <i class="bi bi-clipboard2-data me-1"></i> Примеры меню
+                    </a>
+                    <a href="products.php" class="btn">
+                        <i class="bi bi-basket-fill me-1"></i> Продукты
+                    </a>
+                    <a href="help.html" class="btn active-page">
+                        <i class="bi bi-question-circle me-1"></i> Помощь
+                    </a>
+                </div>
+
+                <!-- Кнопка "Ещё" на мобильных -->
+                <div class="d-md-none">
+                    <button class="btn btn-light border rounded-circle p-2" id="mobile-nav-toggle">
+                        <i class="bi bi-three-dots fs-4"></i>
+                    </button>
+                    <div id="mobile-nav-menu" class="d-none bg-white border rounded shadow position-absolute z-3" style="right: 1rem; top: 100%; min-width: 200px; margin-top: 0.5rem;">
+                        <div class="p-2">
+                            <a href="menu_examples.html" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                <i class="bi bi-clipboard2-data me-2"></i> Примеры меню
+                            </a>
+                            <a href="products.php" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                <i class="bi bi-basket-fill me-2"></i> Продукты
+                            </a>
+                            <a href="help.html" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                <i class="bi bi-question-circle me-2"></i> Помощь
+                            </a>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="container py-5">
+        <h1 class="text-center mb-5">Как пользоваться DietKeeper</h1>
+
+        <!-- Секция 1: Основные возможности -->
+        <div class="help-section">
+            <h2><i class="bi bi-lightbulb me-2"></i>Основные функции</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="help-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h5>Поиск продуктов</h5>
+                        <p>Введите название продукта в строку поиска — вы получите результаты мгновенно. Поддерживается поиск по части названия (например, «ябл» → «яблоко»).</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="help-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-funnel"></i>
+                        </div>
+                        <h5>Фильтрация</h5>
+                        <p>Используйте фильтры, чтобы найти продукты по критериям: калории, белки, жиры, углеводы, вегетарианские, без сахара и др.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секция 2: Подсказки по КБЖУ -->
+        <div class="help-section mt-5">
+            <h2><i class="bi bi-info-circle me-2"></i>Что означают буквы КБЖУ?</h2>
+            <div class="help-card">
+                <p><strong>К</strong> — <strong>калории</strong> (ккал): энергетическая ценность продукта.</p>
+                <p><strong>Б</strong> — <strong>белки</strong> (г): строительный материал для мышц и тканей.</p>
+                <p><strong>Ж</strong> — <strong>жиры</strong> (г): источник энергии и витаминов.</p>
+                <p><strong>У</strong> — <strong>углеводы</strong> (г): основной источник энергии для мозга и тела.</p>
+                <p>Сбалансированное питание = правильное соотношение КБЖУ под ваши цели (похудение, поддержание, набор массы).</p>
+            </div>
+        </div>
+
+        <!-- Секция 3: Советы и ошибки -->
+        <div class="help-section mt-5">
+            <h2><i class="bi bi-exclamation-triangle me-2"></i>Советы и частые вопросы</h2>
+            <div class="help-card">
+                <ul class="mb-0">
+                    <li>Если ничего не находится — проверьте, нет ли опечатки в названии.</li>
+                    <li>Фильтры применяются <strong>одновременно</strong>: выбрали «низкокалорийные» и «высокий белок» — система покажет продукты, подходящие под оба условия.</li>
+                    <li>Для ввода диапазона калорий используйте поля «От» и «До» — можно указать любые значения от 0 до 1000.</li>
+                    <li>Изображения продуктов носят справочный характер. Пищевая ценность может отличаться у разных производителей.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Секция 4: Техподдержка -->
+        <div class="help-section mt-5">
+            <h2><i class="bi bi-envelope me-2"></i>Нужна помощь?</h2>
+            <div class="help-card">
+                <p>Если у вас возникли технические проблемы или вы нашли ошибку в данных — напишите на: <strong>example@dietkeeper.local</strong></p>
+                <p class="text-muted small">Мы ответим в течение 24 часов.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS для мобильного меню -->
+    <script>
+        document.getElementById('mobile-nav-toggle')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('mobile-nav-menu');
+            menu.classList.toggle('d-none');
+        });
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobile-nav-menu');
+            const button = document.getElementById('mobile-nav-toggle');
+            if (menu && !menu.contains(e.target) && e.target !== button) {
+                menu.classList.add('d-none');
+            }
+        });
+    </script>
+</body>
+</html>
