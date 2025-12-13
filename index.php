@@ -26,7 +26,7 @@
                 <div class="d-flex gap-2 align-items-center">
                     <div class="d-none d-md-flex gap-2">
                         <!-- Кнопка "Примеры меню" -->
-                        <a href="categories.html" class="btn">
+                        <a href="menu_examples.html" class="btn">
                             <i class="bi bi-clipboard2-data me-1"></i> Примеры меню
                         </a>
 
@@ -49,7 +49,7 @@
                         <!-- Выпадающее меню -->
                         <div id="mobile-nav-menu" class="d-none bg-white border rounded shadow position-absolute z-3" style="right: 1rem; top: 100%; min-width: 200px; margin-top: 0.5rem;">
                             <div class="p-2">
-                                <a href="categories.html" class="d-flex align-items-center text-decoration-none text-dark py-2">
+                                <a href="menu_examples.html" class="d-flex align-items-center text-decoration-none text-dark py-2">
                                     <i class="bi bi-clipboard2-data me-2"></i> Примеры меню
                                 </a>
                                 <a href="products.php" class="d-flex align-items-center text-decoration-none text-dark py-2">
@@ -116,7 +116,7 @@
                     }
                     ?>
                     <!-- Кнопка "Показать еще" -->
-                    <a href="categories.html" class="btn btn-success w-100 d-md-none mt-3">
+                    <a href="menu_examples.html" class="btn btn-success w-100 d-md-none mt-3">
                         Показать еще <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>

@@ -138,7 +138,10 @@ try {
                         <input type="hidden" id="editId" name="id">
                         <div class="mb-3">
                             <label>Название</label>
-                            <input type="text" class="form-control" id="editName" name="name" required>
+                            <input type="text" class="form-control" id="editName" name="name"
+                                title="От 1 до 100 символов, буквы, цифры, пробелы и знаки препинания"
+                                pattern=".{1,100}" maxlength="100" required>
+                            <div class="form-text text-muted">До 100 символов</div>
                         </div>
                         <div class="mb-3">
                             <label>Категория</label>
@@ -147,24 +150,29 @@ try {
                         <div class="mb-3">
                             <label>Белки (г)</label>
                             <input type="number" step="0.01" class="form-control" id="editProtein" name="protein" required>
+                            <div class="form-text text-muted">Только цифры, например: 12.5</div>
                         </div>
                         <div class="mb-3">
                             <label>Жиры (г)</label>
                             <input type="number" step="0.01" class="form-control" id="editFat" name="fat" required>
+                            <div class="form-text text-muted">Только цифры, например: 12.5</div>
                         </div>
                         <div class="mb-3">
                             <label>Углеводы (г)</label>
                             <input type="number" step="0.01" class="form-control" id="editCarbs" name="carbs" required>
+                            <div class="form-text text-muted">Только цифры, например: 12.5</div>
                         </div>
                         <div class="mb-3">
                             <label>Калории (ккал)</label>
-                            <input type="number" step="0.01" class="form-control" id="editCalories" name="calories" required>
+                            <input type="number" step="1" min="0" max="5000" class="form-control" id="editCalories" name="calories"
+                                title="Целое число от 0 до 5000" required>
+                            <div class="form-text text-muted">Только целые числа</div>
                         </div>
                         <div class="mb-3">
                             <label>URL изображения</label>
                             <input type="url" class="form-control" id="editImageUrl" name="image_url">
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <button type="submit" class="btn">Сохранить</button>
                     </form>
                 </div>
             </div>
@@ -173,6 +181,9 @@ try {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        let originalData = null;
+
+        // При открытии модального окна сохраняем исходные значения
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const row = this.closest('tr');
@@ -184,32 +195,72 @@ try {
                 document.getElementById('editCarbs').value = row.dataset.carbs;
                 document.getElementById('editCalories').value = row.dataset.calories;
                 document.getElementById('editImageUrl').value = row.dataset.image_url;
+
+                originalData = {
+                    name: row.dataset.name,
+                    category: row.dataset.category,
+                    protein: row.dataset.protein,
+                    fat: row.dataset.fat,
+                    carbs: row.dataset.carbs,
+                    calories: row.dataset.calories,
+                    image_url: row.dataset.image_url
+                };
                 const modal = new bootstrap.Modal(document.getElementById('editModal'));
                 modal.show();
             });
         });
 
-        document.getElementById('editForm').addEventListener('submit', function(e) {
+        // Отправка формы
+        document.getElementById('editForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // Проверка на изменения
+            const current = {
+                name: document.getElementById('editName').value,
+                category: document.getElementById('editCategory').value,
+                protein: document.getElementById('editProtein').value,
+                fat: document.getElementById('editFat').value,
+                carbs: document.getElementById('editCarbs').value,
+                calories: document.getElementById('editCalories').value,
+                image_url: document.getElementById('editImageUrl').value
+            };
+
+            const hasChanges = Object.keys(current).some(key => current[key] !== originalData[key]);
+            if (!hasChanges) {
+                // Нет изменений → просто закрыть модальное окно
+                bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+                return;
+            }
+
+            // Проверка валидности
+            if (!this.checkValidity()) {
+                return;
+            }
+
+            // Отправка...
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Сохранение...';
+
             const formData = new FormData(this);
-            fetch('admin_edit.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
+            try {
+                const res = await fetch('admin_edit.php', { method: 'POST', body: formData });
+                const data = await res.json();
                 if (data.success) {
-                    alert(data.message);
+                    alert('✅ Продукт обновлён!');
                     location.reload();
                 } else {
-                    alert('Ошибка: ' + (data.message || 'Неизвестная ошибка'));
+                    alert('❌ Ошибка: ' + (data.message || 'Неизвестная ошибка'));
                 }
-            })
-            .catch(err => {
-                console.error('Ошибка сети:', err);
-                alert('Ошибка сети');
-            });
+            } catch (err) {
+                alert('❌ Ошибка сети');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         });
     </script>
+
 </body>
 </html>

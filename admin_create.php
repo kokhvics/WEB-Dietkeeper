@@ -74,7 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form id="createForm">
                     <div class="mb-3">
                         <label for="createName" class="form-label">Название</label>
-                        <input type="text" class="form-control" id="createName" name="name" required>
+                            <input type="text" class="form-control" id="createName" name="name"
+                            title="От 1 до 100 символов, буквы, цифры, пробелы и знаки препинания"
+                            pattern=".{1,100}" maxlength="100" required>
+                        <div class="form-text text-muted">До 100 символов</div>
                     </div>
                     <div class="mb-3">
                         <label for="createCategory" class="form-label">Категория</label>
@@ -93,23 +96,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="mb-3">
                         <label for="createProtein" class="form-label">Белки (г)</label>
-                        <input type="number" step="0.01" class="form-control" id="createProtein" name="protein" required>
+                        <input type="number" step="0.01" min="0" max="1000" class="form-control" id="createProtein" name="protein"
+                            title="Число от 0 до 1000, до двух знаков после запятой" required>
+                        <div class="form-text text-muted">Только цифры, например: 12.5</div>
                     </div>
                     <div class="mb-3">
                         <label for="createFat" class="form-label">Жиры (г)</label>
                         <input type="number" step="0.01" class="form-control" id="createFat" name="fat" required>
+                        <div class="form-text text-muted">Только цифры, например: 12.5</div>
                     </div>
                     <div class="mb-3">
                         <label for="createCarbs" class="form-label">Углеводы (г)</label>
                         <input type="number" step="0.01" class="form-control" id="createCarbs" name="carbs" required>
+                        <div class="form-text text-muted">Только цифры, например: 12.5</div>
                     </div>
                     <div class="mb-3">
                         <label for="createCalories" class="form-label">Калории (ккал)</label>
-                        <input type="number" step="0.01" class="form-control" id="createCalories" name="calories" required>
+                        <input type="number" step="1" min="0" max="5000" class="form-control" id="createCalories" name="calories"
+                            title="Целое число от 0 до 5000" required>
+                        <div class="form-text text-muted">Только целые числа</div>
                     </div>
                     <div class="mb-3">
                         <label for="createImageUrl" class="form-label">URL изображения</label>
-                        <input type="url" class="form-control" id="createImageUrl" name="image_url">
+                         <input type="url" class="form-control" id="createImageUrl" name="image_url"
+                                title="Полный URL, начинается с http:// или https://">
                     </div>
                     <button type="submit" class="btn btn-success">Создать продукт</button>
                 </form>
@@ -119,26 +129,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('createForm').addEventListener('submit', function(e) {
+        // Проверка дубликатов — выполняется при потере фокуса с поля "Название"
+        document.getElementById('createName').addEventListener('blur', async function() {
+            const name = this.value.trim();
+            if (name.length < 1) return;
+            const res = await fetch(`search.php?query=${encodeURIComponent(name)}`);
+            const products = await res.json();
+            if (products.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+                this.setCustomValidity('Продукт с таким названием уже существует');
+                this.reportValidity();
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        // Отправка формы
+        document.getElementById('createForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Дополнительная проверка перед отправкой
+            if (!this.checkValidity()) {
+                return;
+            }
+
+            // Показать загрузку
+            const btn = document.getElementById('createSubmitBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Создание...';
+
             const formData = new FormData(this);
-            fetch('admin_create.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
+            try {
+                const res = await fetch('admin_create.php', { method: 'POST', body: formData });
+                const data = await res.json();
                 if (data.success) {
-                    alert(data.message);
-                    document.getElementById('createForm').reset();
+                    // Визуальное уведомление (Toast или alert)
+                    alert('✅ Продукт создан!');
+                    this.reset();
                 } else {
-                    alert('Ошибка: ' + (data.message || 'Неизвестная ошибка'));
+                    alert('❌ Ошибка: ' + (data.message || 'Неизвестная ошибка'));
                 }
-            })
-            .catch(err => {
-                console.error('Ошибка сети:', err);
-                alert('Ошибка сети');
-            });
+            } catch (err) {
+                alert('❌ Ошибка сети');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         });
     </script>
 </body>

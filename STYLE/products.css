@@ -94,10 +94,7 @@
     object-fit: cover;
     height: 200px;
 }
-.btn.active-page{
-    background-color: #FFC107;
-    transform: scale(1.02);
-}
+
 /* Стили для полей ввода калорий */
 .range-inputs .form-control {
     text-align: center;

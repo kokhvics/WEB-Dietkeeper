@@ -1,0 +1,28 @@
+.menu-card {
+    text-align: center;
+    margin: 0 auto 2rem auto;
+}
+.menu-card img {
+    width: 80%;
+    height: auto;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+.menu-title {
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 1rem;
+}
+.calorie-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+.calorie-buttons .btn {
+    min-width: 120px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+}

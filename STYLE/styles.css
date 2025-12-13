@@ -89,7 +89,10 @@ header.sticky-top {
     cursor: pointer;
 }
 
-
+.btn.active-page{
+    background-color: #FFC107;
+    transform: scale(1.02);
+}
 
 /* Иконки на кнопках - выравнивание по одной линии с текстом */
 .btn i {

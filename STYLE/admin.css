@@ -1,5 +1,6 @@
 :root {
     --primary-color: #9ACD32;
+    --secondary-color: #FFC107;
 }
 .table-header-green th {
     background-color: var(--primary-color) !important; /* #9ACD32 */
@@ -33,4 +34,9 @@
 .form-select:focus::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+.btn.active-page {
+    background-color: var(--secondary-color) !important;
+    color: #212529 !important;
+    box-shadow: 0 2px 4px rgba(154, 205, 50, 0.3);
 }
