@@ -113,7 +113,7 @@ try {
     $_SESSION['github_oauth'] = true;
 
     // Перенаправляем в админ-панель
-    header('Location: adminpanel.php');
+    header('Location: admin_view.php');
     exit;
 
 } catch (Exception $e) {
