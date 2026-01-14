@@ -9,7 +9,6 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
     exit;
 }
 
-
 // Загружаем ключ шифрования
 $config = include 'config.php';
 $encryption_key = $config['encryption_key'];
